@@ -4,10 +4,10 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Animator animator;
     [SerializeField] private float comboResetTime = 1f;
     private PlayerBackDash playerBackDash;
+    private PlayerStateMachine stateMachine;
     private int comboIndex;
     private float lastAttackTime;
     private bool isAttacking;
-    private bool canChainAttack;
     private bool nextAttackQueued;
     public bool IsAttacking => isAttacking;
     private void Start()
@@ -18,6 +18,7 @@ public class PlayerAttack : MonoBehaviour
         }
 
         playerBackDash = GetComponent<PlayerBackDash>();
+        stateMachine = GetComponent<PlayerStateMachine>();
     }
     private void Update()
     {
@@ -41,42 +42,36 @@ public class PlayerAttack : MonoBehaviour
                 lastAttackTime = Time.time;
                 StartAttack();
             }
-            else if (canChainAttack && comboIndex < 3)
+            else if (comboIndex < 3)
             {
-                lastAttackTime = Time.time;
                 nextAttackQueued = true;
+                lastAttackTime = Time.time;
             }
         }
     }
     private void StartAttack()
     {
         isAttacking = true;
-        canChainAttack = false;
         nextAttackQueued = false;
+
+        stateMachine.ChangeState(PlayerState.Attack);
 
         animator.Play("Attack" + comboIndex, 0, 0f);
     }
-    public void OpenComboWindow()
-    {
-        canChainAttack = true;
-    }
-    public void CloseComboWindow()
-    {
-        canChainAttack = false;
-    }
     public void FinishAttack()
     {
-        isAttacking = false;
-        canChainAttack = false;
-
         if (nextAttackQueued && comboIndex < 3)
         {
             comboIndex++;
+            lastAttackTime = Time.time;
             StartAttack();
         }
         else
         {
+            isAttacking = false;
             nextAttackQueued = false;
+
+            stateMachine.ChangeState(PlayerState.Idle);
         }
 
         if (comboIndex >= 3 && !isAttacking)

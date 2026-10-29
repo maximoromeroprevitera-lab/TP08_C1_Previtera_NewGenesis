@@ -3,24 +3,27 @@ public class EnemyFollow : MonoBehaviour
 {
     [SerializeField] private float speed = 2f;
     [SerializeField] private float detectionDistance = 10f;
-    [SerializeField] private float stopDistance = 5f;
-
+    [SerializeField] private float stopDistance = 1.5f;
     private Rigidbody2D rb;
     private Transform player;
-    private bool blockedByBarrel;
+    private EnemyStateMachine stateMachine;
+    private EnemyLife enemyLife;
     public bool PlayerSeen
     {
         get
         {
             return player != null &&
-                   Mathf.Abs(player.position.x - transform.position.x) <= detectionDistance;
+                   Mathf.Abs(player.position.x - transform.position.x)
+                   <= detectionDistance;
         }
     }
     public bool PlayerInShootRange { get; private set; }
-
+    public Transform Player => player;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        stateMachine = GetComponent<EnemyStateMachine>();
+        enemyLife = GetComponent<EnemyLife>();
     }
     private void Start()
     {
@@ -33,50 +36,58 @@ public class EnemyFollow : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (!PlayerSeen)
+        if (enemyLife != null && enemyLife.IsDead)
         {
-            PlayerInShootRange = false;
-            blockedByBarrel = false;
             return;
         }
-        float distance = Mathf.Abs(player.position.x - transform.position.x);
-        bool blocked = blockedByBarrel;
-        blockedByBarrel = false;
-        PlayerInShootRange = distance <= stopDistance || blocked;
+
+        if (stateMachine.IsAttacking)
+        {
+            Stop();
+            return;
+        }
+
+        if (player == null || !PlayerSeen)
+        {
+            PlayerInShootRange = false;
+            Stop();
+            stateMachine.SetMovement(false);
+            return;
+        }
+
+        float distance = Mathf.Abs(
+            player.position.x - transform.position.x
+        );
+
+        PlayerInShootRange = distance <= stopDistance;
 
         if (PlayerInShootRange)
         {
             Stop();
+            stateMachine.SetMovement(false);
         }
         else
         {
             Chase();
+            stateMachine.SetMovement(true);
         }
     }
     private void Chase()
     {
-        float direction = Mathf.Sign(player.position.x - transform.position.x);
-        rb.linearVelocity = new Vector2(direction * speed, rb.linearVelocity.y);
+        float direction = Mathf.Sign(
+            player.position.x - transform.position.x
+        );
+
+        rb.linearVelocity = new Vector2(
+            direction * speed,
+            rb.linearVelocity.y
+        );
     }
     private void Stop()
     {
-        rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        CheckBarrel(collision);
-    }
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-        CheckBarrel(collision);
-    }
-    private void CheckBarrel(Collision2D collision)
-    {
-        if (collision.collider.GetComponentInParent<Barrel>() == null) return;
-
-        if (Mathf.Abs(collision.GetContact(0).normal.x) > 0.5f)
-        {
-            blockedByBarrel = true;
-        }
+        rb.linearVelocity = new Vector2(
+            0f,
+            rb.linearVelocity.y
+        );
     }
 }

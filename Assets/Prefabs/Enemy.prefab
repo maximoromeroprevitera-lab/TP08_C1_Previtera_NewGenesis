@@ -116,7 +116,7 @@ Transform:
   m_GameObject: {fileID: 2462542909766654025}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.84, y: 0.349, z: 0}
+  m_LocalPosition: {x: -1.88, y: -0.033, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -147,7 +147,7 @@ Transform:
   m_GameObject: {fileID: 5245948407208489005}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.55, z: 0}
+  m_LocalPosition: {x: 0, y: 0.89, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -260,8 +260,8 @@ GameObject:
   - component: {fileID: 1315095137413959530}
   - component: {fileID: 1338740203131271681}
   - component: {fileID: 253975721785999309}
-  - component: {fileID: 8250252061954832292}
-  - component: {fileID: 42597957001463136}
+  - component: {fileID: 8025542772712319144}
+  - component: {fileID: 5547836004703648269}
   - component: {fileID: 1889059019824831897}
   - component: {fileID: 185684578151645487}
   - component: {fileID: -6071210685924593234}
@@ -343,7 +343,7 @@ SpriteRenderer:
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.8, y: 0.68}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -361,8 +361,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFollow
   speed: 2
-  detectionDistance: 10
-  stopDistance: 4
+  detectionDistance: 7
+  stopDistance: 2.2
 --- !u!114 &1315095137413959530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,8 +375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3322264592dbfce4186e1e77a655fc28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  speed: 2
-  movementDistance: 3
 --- !u!114 &1338740203131271681
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,7 +406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealthBar
   fill: {fileID: 2127068145904281969}
---- !u!114 &8250252061954832292
+--- !u!114 &8025542772712319144
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -417,28 +415,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 8254588072812238292}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddc89c67b66202c4999fd6b799fd886c, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d003648f5f23944ea554f326f9897b7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyShoot
-  bulletPrefab: {fileID: 4118635516223356883, guid: ea018179645fb75478405944cf31a602, type: 3}
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStateMachine
+  animator: {fileID: -6071210685924593234}
+--- !u!114 &5547836004703648269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8254588072812238292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d062bc4651da63e42b22801be3f99484, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyMeleeAttack
+  hitboxPrefab: {fileID: 1403696518750541974, guid: ebf6ad02d1b05194a8605eb03e3452dd, type: 3}
   shootPoint: {fileID: 5333180131218336019}
-  bulletLifetime: 2
-  bulletSpeed: 8
-  shootCooldown: 1.5
---- !u!114 &42597957001463136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8254588072812238292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ec367ca00db05247b22a6c7529ac3a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAmmo
-  magazineSize: 4
-  reloadTime: 4
+  damage: 1
+  attackRange: 1.5
+  attackCooldown: 1.5
+  firstHitDelay: 0.25
+  firstAttackDuration: 0.65
+  secondHitDelay: 0.25
+  secondAttackDuration: 0.65
+  knockbackForce: 8
+  knockbackUpForce: 0
 --- !u!50 &1889059019824831897
 Rigidbody2D:
   serializedVersion: 5
@@ -500,17 +503,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.0055422783}
+  m_Offset: {x: -0.24050593, y: -0.1549313}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.9117647, y: 2.1764705}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 3.4782608, y: 2.9565217}
+    newSize: {x: 0.8, y: 0.68}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.9117647, y: 2.1653857}
+  m_Size: {x: 0.5428462, y: 2.6987753}
   m_EdgeRadius: 0
 --- !u!95 &-6071210685924593234
 Animator:
@@ -522,7 +525,7 @@ Animator:
   m_GameObject: {fileID: 8254588072812238292}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a73ee381d0eaed84c9881a9b1f9a885e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 72d033a2365bf4f4cb344146a413c28f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

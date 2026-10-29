@@ -13,6 +13,7 @@ public class PlayerBackDash : MonoBehaviour
     [SerializeField] private float shortDashDuration = 0.25f;
     [SerializeField] private float fullDashDuration = 0.4f;
     private PlayerAttack playerAttack;
+    private PlayerStateMachine stateMachine;
     private float lastShiftTime;
     private bool firstShift;
     private bool isDashing;
@@ -29,6 +30,7 @@ public class PlayerBackDash : MonoBehaviour
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         playerAttack = GetComponent<PlayerAttack>();
+        stateMachine = GetComponent<PlayerStateMachine>();
     }
     private void Update()
     {
@@ -57,6 +59,8 @@ public class PlayerBackDash : MonoBehaviour
     private IEnumerator Dash(float distance, float duration)
     {
         isDashing = true;
+
+        stateMachine.ChangeState(PlayerState.BackDash);
         animator.Play("BackDash", 0, 0f);
 
         float direction = spriteRenderer.flipX ? 1f : -1f;
@@ -75,6 +79,8 @@ public class PlayerBackDash : MonoBehaviour
         }
 
         rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+
         isDashing = false;
+        stateMachine.ChangeState(PlayerState.Idle);
     }
 }

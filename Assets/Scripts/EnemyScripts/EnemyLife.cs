@@ -9,16 +9,16 @@ public class EnemyLife : MonoBehaviour
     [SerializeField] private float dropOffsetY = -0.75f;
     [SerializeField] private float deathAnimationTime = 1f;
     private int currentHealth;
-    private Animator animator;
+    private EnemyStateMachine stateMachine;
     private bool isDead;
+    public bool IsDead => isDead;
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        stateMachine = GetComponent<EnemyStateMachine>();
     }
     private void Start()
     {
         currentHealth = maxHealth;
-
         healthBar.SetHealth(currentHealth, maxHealth);
     }
     public void TakeDamage(int damage)
@@ -27,32 +27,30 @@ public class EnemyLife : MonoBehaviour
         {
             return;
         }
+
         currentHealth -= damage;
 
         if (currentHealth <= 0)
         {
             currentHealth = 0;
             healthBar.SetHealth(currentHealth, maxHealth);
-
             Die();
+            return;
         }
-        else
-        {
-            healthBar.SetHealth(currentHealth, maxHealth);
-            animator.SetTrigger("Hurt");
-        }
+
+        healthBar.SetHealth(currentHealth, maxHealth);
     }
     private void Die()
+
     {
+        Debug.Log("EL ENEMIGO MURIO: " + gameObject.name, this);
+
+        isDead = true;
+        stateMachine.Die();
+
         isDead = true;
 
-        animator.SetTrigger("Death");
-
-        EnemyShoot enemyShoot = GetComponent<EnemyShoot>();
-        if (enemyShoot != null)
-        {
-            enemyShoot.enabled = false;
-        }
+        stateMachine.Die();
 
         EnemyFollow enemyFollow = GetComponent<EnemyFollow>();
         if (enemyFollow != null)
@@ -66,10 +64,23 @@ public class EnemyLife : MonoBehaviour
             enemyMovement.enabled = false;
         }
 
+        EnemyMeleeAttack enemyMeleeAtaack = GetComponent<EnemyMeleeAttack>();
+        if (enemyMeleeAtaack != null)
+        {
+            enemyMeleeAtaack.enabled = false;
+        }
+
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
+        }
+
+        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+
+        foreach (Collider2D enemyCollider in colliders)
+        {
+            enemyCollider.enabled = false;
         }
 
         StartCoroutine(DeathSequence());
@@ -78,21 +89,40 @@ public class EnemyLife : MonoBehaviour
     {
         yield return new WaitForSeconds(deathAnimationTime);
 
-        Instantiate(
-            deathParticles,
-            transform.position,
-            Quaternion.identity
+        if (deathParticles != null)
+        {
+            Instantiate(
+                deathParticles,
+                transform.position,
+                Quaternion.identity
+            );
+        }
+        if (ammoBoxPrefab != null)
+        {
+            Instantiate(
+                ammoBoxPrefab,
+                new Vector2(
+                    transform.position.x,
+                    transform.position.y + dropOffsetY
+                ),
+                Quaternion.identity
+            );
+        }
+        Debug.Log("DeathSequence terminó para: " + gameObject.name, this);
+    }
+    private void OnDisable()
+    {
+        Debug.LogWarning(
+            "EnemyLife se desactivó: " + gameObject.name,
+            this
         );
+    }
 
-        Instantiate(
-            ammoBoxPrefab,
-            new Vector2(
-                transform.position.x,
-                transform.position.y + dropOffsetY
-            ),
-            Quaternion.identity
+    private void OnDestroy()
+    {
+        Debug.LogWarning(
+            "EnemyLife fue destruido: " + gameObject.name,
+            this
         );
-
-        Destroy(gameObject);
     }
 }

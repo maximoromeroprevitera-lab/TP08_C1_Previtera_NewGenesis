@@ -1,34 +1,31 @@
 fileFormatVersion: 2
-guid: a5cd0ee24967ac0489e00bd1f49c9a2c
+guid: 8442b05d2b0f26c409c0e4e3fb1561ae
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -9074765640951341020
-    second: "\u0421harging_0"
+      213: -5317402387652270344
+    second: Pick_Up_0
   - first:
-      213: 4274047643876745007
-    second: "\u0421harging_1"
+      213: 3889136585180213142
+    second: Pick_Up_1
   - first:
-      213: -2031922078052225114
-    second: "\u0421harging_2"
+      213: 8818570854636109939
+    second: Pick_Up_2
   - first:
-      213: 4489638830581115309
-    second: "\u0421harging_3"
+      213: 1599909448233392668
+    second: Pick_Up_3
   - first:
-      213: 4492497724863094133
-    second: "\u0421harging_4"
+      213: 3667021319364516244
+    second: Pick_Up_4
   - first:
-      213: -5168688688531275099
-    second: "\u0421harging_5"
+      213: -7122421280935400588
+    second: Pick_Up_5
   - first:
-      213: -8897702672547865652
-    second: "\u0421harging_6"
+      213: -7692426820360121772
+    second: Pick_Up_6
   - first:
-      213: 5952198996027102371
-    second: "\u0421harging_7"
-  - first:
-      213: 9168098596157038818
-    second: "\u0421harging_8"
+      213: -288093956676622358
+    second: Pick_Up_7
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -61,7 +58,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +72,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 34
+  spritePixelsToUnits: 23
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -133,17 +130,52 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\u0421harging_0"
+      name: Pick_Up_0
       rect:
         serializedVersion: 2
-        x: 53
+        x: 38
+        y: 0
+        width: 32
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f62c2483bac436b0800000000000000
+      internalID: -5317402387652270344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Pick_Up_1
+      rect:
+        serializedVersion: 2
+        x: 166
         y: 0
         width: 34
-        height: 71
+        height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +184,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 420ec2fcab4ff0280800000000000000
-      internalID: -9074765640951341020
+      spriteID: 69f64a26e1df8f530800000000000000
+      internalID: 3889136585180213142
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0421harging_1"
+      name: Pick_Up_2
       rect:
         serializedVersion: 2
-        x: 181
+        x: 294
         y: 0
-        width: 29
-        height: 71
+        width: 40
+        height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -174,20 +206,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f2f5e5eefa7705b30800000000000000
-      internalID: 4274047643876745007
+      spriteID: 370c231387bd16a70800000000000000
+      internalID: 8818570854636109939
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0421harging_2"
+      name: Pick_Up_3
       rect:
         serializedVersion: 2
-        x: 309
+        x: 422
         y: 0
-        width: 29
-        height: 72
+        width: 34
+        height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -196,20 +228,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6af6c66b2a92dc3e0800000000000000
-      internalID: -2031922078052225114
+      spriteID: c1a1ebe9a25043610800000000000000
+      internalID: 1599909448233392668
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0421harging_3"
+      name: Pick_Up_4
       rect:
         serializedVersion: 2
-        x: 437
+        x: 550
         y: 0
-        width: 29
-        height: 72
+        width: 36
+        height: 70
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -218,20 +250,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: da96692bab66e4e30800000000000000
-      internalID: 4489638830581115309
+      spriteID: 49991841670e3e230800000000000000
+      internalID: 3667021319364516244
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0421harging_4"
+      name: Pick_Up_5
       rect:
         serializedVersion: 2
-        x: 565
+        x: 678
         y: 0
-        width: 29
-        height: 72
+        width: 39
+        height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -240,20 +272,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 57d17b4e0ee885e30800000000000000
-      internalID: 4492497724863094133
+      spriteID: 47ba929c493182d90800000000000000
+      internalID: -7122421280935400588
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0421harging_5"
+      name: Pick_Up_6
       rect:
         serializedVersion: 2
-        x: 693
+        x: 806
         y: 0
-        width: 29
-        height: 72
+        width: 41
+        height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -262,20 +294,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5a2838dc5012548b0800000000000000
-      internalID: -5168688688531275099
+      spriteID: 4525fb720920f3590800000000000000
+      internalID: -7692426820360121772
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\u0421harging_6"
+      name: Pick_Up_7
       rect:
         serializedVersion: 2
-        x: 821
+        x: 934
         y: 0
-        width: 44
-        height: 71
+        width: 34
+        height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -284,52 +316,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ccb9db5bf82058480800000000000000
-      internalID: -8897702672547865652
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\u0421harging_7"
-      rect:
-        serializedVersion: 2
-        x: 949
-        y: 0
-        width: 43
-        height: 71
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3a4d1a663757a9250800000000000000
-      internalID: 5952198996027102371
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "\u0421harging_8"
-      rect:
-        serializedVersion: 2
-        x: 1077
-        y: 0
-        width: 43
-        height: 71
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 2e0a2b93911ab3f70800000000000000
-      internalID: 9168098596157038818
+      spriteID: ae76a52a21c700cf0800000000000000
+      internalID: -288093956676622358
       vertices: []
       indices: 
       edges: []
@@ -348,15 +336,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\u0421harging_0": -9074765640951341020
-      "\u0421harging_1": 4274047643876745007
-      "\u0421harging_2": -2031922078052225114
-      "\u0421harging_3": 4489638830581115309
-      "\u0421harging_4": 4492497724863094133
-      "\u0421harging_5": -5168688688531275099
-      "\u0421harging_6": -8897702672547865652
-      "\u0421harging_7": 5952198996027102371
-      "\u0421harging_8": 9168098596157038818
+      Pick_Up_0: -5317402387652270344
+      Pick_Up_1: 3889136585180213142
+      Pick_Up_2: 8818570854636109939
+      Pick_Up_3: 1599909448233392668
+      Pick_Up_4: 3667021319364516244
+      Pick_Up_5: -7122421280935400588
+      Pick_Up_6: -7692426820360121772
+      Pick_Up_7: -288093956676622358
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

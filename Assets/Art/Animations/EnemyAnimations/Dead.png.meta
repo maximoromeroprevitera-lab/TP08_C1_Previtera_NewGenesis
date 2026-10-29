@@ -17,6 +17,12 @@ TextureImporter:
   - first:
       213: -1057675302478342458
     second: Dead_4
+  - first:
+      213: -7954960911384535938
+    second: Dead_5
+  - first:
+      213: -1451345828014226549
+    second: Dead_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -63,7 +69,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 34
+  spritePixelsToUnits: 23
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -121,6 +127,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -128,10 +147,10 @@ TextureImporter:
       name: Dead_0
       rect:
         serializedVersion: 2
-        x: 38
+        x: 20
         y: 0
-        width: 28
-        height: 71
+        width: 80
+        height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,10 +169,10 @@ TextureImporter:
       name: Dead_1
       rect:
         serializedVersion: 2
-        x: 166
+        x: 156
         y: 0
-        width: 35
-        height: 62
+        width: 65
+        height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -172,10 +191,10 @@ TextureImporter:
       name: Dead_2
       rect:
         serializedVersion: 2
-        x: 294
-        y: 0
-        width: 49
-        height: 59
+        x: 274
+        y: 6
+        width: 61
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,10 +213,10 @@ TextureImporter:
       name: Dead_3
       rect:
         serializedVersion: 2
-        x: 421
-        y: 0
-        width: 69
-        height: 31
+        x: 277
+        y: 29
+        width: 8
+        height: 6
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -216,10 +235,10 @@ TextureImporter:
       name: Dead_4
       rect:
         serializedVersion: 2
-        x: 549
+        x: 292
         y: 0
-        width: 72
-        height: 11
+        width: 22
+        height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -230,6 +249,50 @@ TextureImporter:
       bones: []
       spriteID: 6c6131c8ae16251f0800000000000000
       internalID: -1057675302478342458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dead_5
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 0
+        width: 13
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e7c9ec2c23d4a9190800000000000000
+      internalID: -7954960911384535938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dead_6
+      rect:
+        serializedVersion: 2
+        x: 395
+        y: 0
+        width: 68
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8387f2b8a8cbdbe0800000000000000
+      internalID: -1451345828014226549
       vertices: []
       indices: 
       edges: []
@@ -253,6 +316,8 @@ TextureImporter:
       Dead_2: -1631342717326862633
       Dead_3: -3927913518680497933
       Dead_4: -1057675302478342458
+      Dead_5: -7954960911384535938
+      Dead_6: -1451345828014226549
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

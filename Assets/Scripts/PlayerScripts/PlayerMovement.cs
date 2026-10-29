@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator animator;
     private PlayerAttack playerAttack;
     private PlayerBackDash playerBackDash;
+    private PlayerStateMachine stateMachine;
     private float horizontalInput;
     private void Start()
     {
@@ -14,6 +15,7 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         playerAttack = GetComponent<PlayerAttack>();
         playerBackDash = GetComponent<PlayerBackDash>();
+        stateMachine = GetComponent<PlayerStateMachine>();
 
         if (spriteRenderer == null)
         {
@@ -28,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("Speed", 0f);
             return;
         }
+
         horizontalInput = Input.GetAxisRaw("Horizontal");
 
         animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
@@ -40,18 +43,18 @@ public class PlayerMovement : MonoBehaviour
         {
             spriteRenderer.flipX = false;
         }
+
+        UpdateMovementState();
     }
     private void FixedUpdate()
     {
         if (playerBackDash.IsDashing)
         {
-            // No sobrescribir la velocidad del backdash.
             return;
         }
 
         if (playerAttack.IsAttacking)
         {
-            // Detener el movimiento durante el ataque.
             rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
             return;
         }
@@ -64,5 +67,26 @@ public class PlayerMovement : MonoBehaviour
             horizontalInput * playerData.moveSpeed,
             rb.linearVelocity.y
         );
+    }
+    private void UpdateMovementState()
+    {
+        if (stateMachine == null)
+        {
+            return;
+        }
+
+        if (rb.linearVelocity.y < -0.1f ||
+            rb.linearVelocity.y > 0.1f)
+        {
+            stateMachine.ChangeState(PlayerState.Jump);
+        }
+        else if (Mathf.Abs(horizontalInput) > 0)
+        {
+            stateMachine.ChangeState(PlayerState.Run);
+        }
+        else
+        {
+            stateMachine.ChangeState(PlayerState.Idle);
+        }
     }
 }

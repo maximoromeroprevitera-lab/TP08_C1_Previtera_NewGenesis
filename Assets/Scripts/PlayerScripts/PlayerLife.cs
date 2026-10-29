@@ -13,6 +13,12 @@ public class PlayerLife : MonoBehaviour
     }
     private void Start()
     {
+        if (playerData == null)
+        {
+            Debug.LogError("PlayerLife: falta asignar PlayerDataSO.", this);
+            return;
+        }
+
         currentHealth = playerData.maxHealth;
     }
     public void TakeDamage(int damage)
@@ -21,23 +27,26 @@ public class PlayerLife : MonoBehaviour
         {
             return;
         }
-
         currentHealth -= damage;
-        AudioManager.Instance.PlayPlayerHit();
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayPlayerHit();
+        }
 
         if (currentHealth <= 0)
         {
             currentHealth = 0;
             Die();
         }
-        else
+        else if (animator != null)
         {
             animator.SetTrigger("Hurt");
         }
     }
     public void Heal(int amount)
     {
-        if (isDead)
+        if (isDead || playerData == null)
         {
             return;
         }
@@ -55,9 +64,19 @@ public class PlayerLife : MonoBehaviour
     {
         isDead = true;
 
-        animator.SetTrigger("Death");
+        if (animator != null)
+        {
+            animator.SetTrigger("Death");
+        }
 
-        gameManager.GameOver();
+        if (gameManager != null)
+        {
+            gameManager.GameOver();
+        }
+        else
+        {
+            Debug.LogError("PlayerLife: falta asignar GameManager.", this);
+        }
 
         Debug.Log("Player defeated");
     }

@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 360656135958470559}
   - component: {fileID: 17740159245419407}
   - component: {fileID: 8006658492315478217}
+  - component: {fileID: 189664536389895530}
+  - component: {fileID: 7541376851543460675}
   - component: {fileID: 6749940585677992725}
   - component: {fileID: 5875272030046105619}
   - component: {fileID: 1970010777060723635}
@@ -189,6 +191,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad25475b958745843befb996b42abf80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStateMachine
+--- !u!114 &189664536389895530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555635779255779608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b632a7dfc3c6dd4a86b3df49a0818f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerKnockback
+  knockbackDuration: 0.2
+--- !u!114 &7541376851543460675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555635779255779608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5df28f49955f584c8606cf40abcdbe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackHitbox
+  hitboxPrefab: {fileID: 8235446756036643883, guid: 52cd617c82c63f54ea0acc0199654ee8, type: 3}
+  shootPoint: {fileID: 4801349495844819556}
+  attack1Damage: 1
+  attack2Damage: 1
+  attack3Damage: 2
+  attack1Delay: 0.2
+  attack2Delay: 0.2
+  attack3Delay: 0.25
 --- !u!50 &6749940585677992725
 Rigidbody2D:
   serializedVersion: 5

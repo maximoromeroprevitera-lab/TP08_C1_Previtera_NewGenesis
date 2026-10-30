@@ -21,7 +21,6 @@ public class PlayerStateMachine : MonoBehaviour
     public void ChangeState(PlayerState newState)
     {
         CurrentState = newState;
-        Debug.Log("Player State: " + CurrentState);
     }
     public bool CanMove()
     {

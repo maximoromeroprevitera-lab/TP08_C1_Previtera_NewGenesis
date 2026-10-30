@@ -387,7 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9decb03be9ffc04993dccbdb899e110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLife
-  maxHealth: 3
+  maxHealth: 6
   healthBar: {fileID: 253975721785999309}
   deathParticles: {fileID: 2482280297917236139, guid: f6d8367ac90756442a43248e1110d554, type: 3}
   ammoBoxPrefab: {fileID: 1310457646027995003, guid: 2b9162cb9f60b074d922df5468fc9b39, type: 3}
@@ -434,7 +434,7 @@ MonoBehaviour:
   hitboxPrefab: {fileID: 1403696518750541974, guid: ebf6ad02d1b05194a8605eb03e3452dd, type: 3}
   shootPoint: {fileID: 5333180131218336019}
   damage: 1
-  attackRange: 1.5
+  attackRange: 2.2
   attackCooldown: 1.5
   firstHitDelay: 0.25
   firstAttackDuration: 0.65

@@ -17,7 +17,6 @@ public class EnemyMeleeAttack : MonoBehaviour
     [Header("Knockback")]
     [SerializeField] private float knockbackForce = 8f;
     [SerializeField] private float knockbackUpForce = 2f;
-    private EnemyFollow follow;
     private EnemyStateMachine stateMachine;
     private EnemyLife enemyLife;
     private PlayerLife playerLife;
@@ -25,7 +24,6 @@ public class EnemyMeleeAttack : MonoBehaviour
     private bool isAttacking;
     private void Awake()
     {
-        follow = GetComponent<EnemyFollow>();
         stateMachine = GetComponent<EnemyStateMachine>();
         enemyLife = GetComponent<EnemyLife>();
     }
@@ -36,17 +34,8 @@ public class EnemyMeleeAttack : MonoBehaviour
     }
     private void Update()
     {
-        if (enemyLife != null && enemyLife.IsDead)
-        {
-            return;
-        }
-
-        if (playerLife == null || playerLife.IsDead)
-        {
-            return;
-        }
-
-        if (isAttacking)
+        if (enemyLife.IsDead || playerLife == null || playerLife.IsDead ||
+            isAttacking)
         {
             return;
         }
@@ -64,44 +53,31 @@ public class EnemyMeleeAttack : MonoBehaviour
         isAttacking = true;
 
         stateMachine.PlayAttack1();
-
         yield return new WaitForSeconds(firstHitDelay);
+        if (IsPlayerInRange()) SpawnHitbox();
 
-        if (IsPlayerInRange())
+        yield return new WaitForSeconds(
+            Mathf.Max(0f, firstAttackDuration - firstHitDelay)
+        );
+
+        if (enemyLife.IsDead)
         {
-            SpawnHitbox();
-        }
-
-        float remainingFirstTime =
-            Mathf.Max(0f, firstAttackDuration - firstHitDelay);
-
-        yield return new WaitForSeconds(remainingFirstTime);
-
-        if (enemyLife != null && enemyLife.IsDead)
-        {
+            isAttacking = false;
             yield break;
         }
 
-        if (playerLife != null &&
-            !playerLife.IsDead &&
-            IsPlayerInRange())
+        if (IsPlayerInRange())
         {
             stateMachine.PlayAttack2();
-
             yield return new WaitForSeconds(secondHitDelay);
+            if (IsPlayerInRange()) SpawnHitbox();
 
-            if (IsPlayerInRange())
-            {
-                SpawnHitbox();
-            }
-
-            float remainingSecondTime =
-                Mathf.Max(0f, secondAttackDuration - secondHitDelay);
-
-            yield return new WaitForSeconds(remainingSecondTime);
+            yield return new WaitForSeconds(
+                Mathf.Max(0f, secondAttackDuration - secondHitDelay)
+            );
         }
 
-        if (enemyLife == null || !enemyLife.IsDead)
+        if (!enemyLife.IsDead)
         {
             stateMachine.FinishAttack();
         }
@@ -110,37 +86,25 @@ public class EnemyMeleeAttack : MonoBehaviour
     }
     private bool IsPlayerInRange()
     {
-        if (playerLife == null || playerLife.IsDead)
-        {
-            return false;
-        }
-
-        float distance = Mathf.Abs(
-            playerLife.transform.position.x - transform.position.x
-        );
-
-        return distance <= attackRange;
+        return playerLife != null &&
+               !playerLife.IsDead &&
+               Mathf.Abs(playerLife.transform.position.x - transform.position.x)
+               <= attackRange;
     }
     private void SpawnHitbox()
     {
-        if (hitboxPrefab == null || shootPoint == null)
-        {
-            return;
-        }
+        if (hitboxPrefab == null || shootPoint == null) return;
+
         GameObject hitbox = Instantiate(
-            hitboxPrefab,
-            shootPoint.position,
-            shootPoint.rotation
+            hitboxPrefab, shootPoint.position, shootPoint.rotation
         );
+
         EnemyHitbox hitboxScript = hitbox.GetComponent<EnemyHitbox>();
 
         if (hitboxScript != null)
         {
             hitboxScript.Setup(
-                transform,
-                damage,
-                knockbackForce,
-                knockbackUpForce
+                transform, damage, knockbackForce, knockbackUpForce
             );
         }
     }

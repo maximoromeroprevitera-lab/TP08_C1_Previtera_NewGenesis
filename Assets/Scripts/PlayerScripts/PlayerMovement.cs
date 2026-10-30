@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerAttack playerAttack;
     private PlayerBackDash playerBackDash;
     private PlayerStateMachine stateMachine;
+    private PlayerKnockback playerKnockback;
     private float horizontalInput;
     private void Start()
     {
@@ -16,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
         playerAttack = GetComponent<PlayerAttack>();
         playerBackDash = GetComponent<PlayerBackDash>();
         stateMachine = GetComponent<PlayerStateMachine>();
+        playerKnockback = GetComponent<PlayerKnockback>();
 
         if (spriteRenderer == null)
         {
@@ -48,6 +50,10 @@ public class PlayerMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (playerKnockback != null && playerKnockback.IsKnockedBack)
+        {
+            return;
+        }
         if (playerBackDash.IsDashing)
         {
             return;

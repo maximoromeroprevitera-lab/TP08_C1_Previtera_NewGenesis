@@ -8,6 +8,7 @@ public class PlayerAttack : MonoBehaviour
     private int comboIndex;
     private float lastAttackTime;
     private bool isAttacking;
+    private PlayerAttackHitbox attackHitbox;
     private bool nextAttackQueued;
     public bool IsAttacking => isAttacking;
     private void Start()
@@ -16,7 +17,7 @@ public class PlayerAttack : MonoBehaviour
         {
             animator = GetComponent<Animator>();
         }
-
+        attackHitbox = GetComponent<PlayerAttackHitbox>();
         playerBackDash = GetComponent<PlayerBackDash>();
         stateMachine = GetComponent<PlayerStateMachine>();
     }
@@ -57,6 +58,8 @@ public class PlayerAttack : MonoBehaviour
         stateMachine.ChangeState(PlayerState.Attack);
 
         animator.Play("Attack" + comboIndex, 0, 0f);
+        if (attackHitbox != null)
+            attackHitbox.StartHitbox(comboIndex);
     }
     public void FinishAttack()
     {

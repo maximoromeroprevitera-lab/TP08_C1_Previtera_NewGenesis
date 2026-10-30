@@ -28,7 +28,6 @@ public class EnemyHitbox : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Destroy(gameObject, lifetime);
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -53,25 +52,35 @@ public class EnemyHitbox : MonoBehaviour
         }
 
         hasHit = true;
+
         playerLife.TakeDamage(damage);
 
-        Rigidbody2D playerRb =
-            playerLife.GetComponent<Rigidbody2D>();
+        PlayerKnockback playerKnockback =
+            playerLife.GetComponent<PlayerKnockback>();
 
-        if (playerRb != null)
+        float direction = Mathf.Sign(
+            playerLife.transform.position.x - owner.position.x
+        );
+
+        if (direction == 0f)
         {
-            float direction = Mathf.Sign(
-                playerLife.transform.position.x - owner.position.x
-            );
+            direction = 1f;
+        }
 
-            if (direction == 0f)
-            {
-                direction = 1f;
-            }
+        Vector2 force = new Vector2(
+            direction * knockbackForce,
+            knockbackUpForce
+        );
 
-            playerRb.linearVelocity = new Vector2(
-                direction * knockbackForce,
-                knockbackUpForce
+        if (playerKnockback != null)
+        {
+            playerKnockback.ApplyKnockback(force);
+        }
+        else
+        {
+            Debug.LogWarning(
+                "El jugador no tiene el componente PlayerKnockback.",
+                playerLife
             );
         }
         Destroy(gameObject);

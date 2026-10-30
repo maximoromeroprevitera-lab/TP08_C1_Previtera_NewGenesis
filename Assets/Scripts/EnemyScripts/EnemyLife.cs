@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 public class EnemyLife : MonoBehaviour
 {
-    [SerializeField] private int maxHealth = 3;
+    [SerializeField] private int maxHealth = 10;
     [SerializeField] private EnemyHealthBar healthBar;
     [SerializeField] private GameObject deathParticles;
     [SerializeField] private GameObject ammoBoxPrefab;
@@ -23,64 +23,43 @@ public class EnemyLife : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        if (isDead)
-        {
-            return;
-        }
+        if (isDead) return;
 
-        currentHealth -= damage;
-
-        if (currentHealth <= 0)
-        {
-            currentHealth = 0;
-            healthBar.SetHealth(currentHealth, maxHealth);
-            Die();
-            return;
-        }
-
+        currentHealth = Mathf.Max(0, currentHealth - damage);
         healthBar.SetHealth(currentHealth, maxHealth);
+
+        if (currentHealth == 0)
+            Die();
     }
     private void Die()
-
     {
-        Debug.Log("EL ENEMIGO MURIO: " + gameObject.name, this);
-
         isDead = true;
         stateMachine.Die();
 
-        isDead = true;
+        EnemyFollow follow = GetComponent<EnemyFollow>();
+        if (follow != null) follow.enabled = false;
 
-        stateMachine.Die();
+        EnemyMeleeAttack attack = GetComponent<EnemyMeleeAttack>();
+        if (attack != null) attack.enabled = false;
 
-        EnemyFollow enemyFollow = GetComponent<EnemyFollow>();
-        if (enemyFollow != null)
-        {
-            enemyFollow.enabled = false;
-        }
-
-        EnemyMovement enemyMovement = GetComponent<EnemyMovement>();
-        if (enemyMovement != null)
-        {
-            enemyMovement.enabled = false;
-        }
-
-        EnemyMeleeAttack enemyMeleeAtaack = GetComponent<EnemyMeleeAttack>();
-        if (enemyMeleeAtaack != null)
-        {
-            enemyMeleeAtaack.enabled = false;
-        }
+        EnemyMovement movement = GetComponent<EnemyMovement>();
+        if (movement != null) movement.enabled = false;
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb != null)
+        if (rb != null) rb.linearVelocity = Vector2.zero;
+
+        CapsuleCollider2D capsule = GetComponent<CapsuleCollider2D>();
+        if (capsule != null)
         {
-            rb.linearVelocity = Vector2.zero;
+            capsule.size = new Vector2(0.8f, 0.5f);
+            capsule.offset = new Vector2(0f, -0.5f);
         }
 
-        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
-
-        foreach (Collider2D enemyCollider in colliders)
+        BoxCollider2D box = GetComponent<BoxCollider2D>();
+        if (box != null)
         {
-            enemyCollider.enabled = false;
+            box.size = new Vector2(0.8f, 0.5f);
+            box.offset = new Vector2(0f, -0.5f);
         }
 
         StartCoroutine(DeathSequence());
@@ -90,39 +69,13 @@ public class EnemyLife : MonoBehaviour
         yield return new WaitForSeconds(deathAnimationTime);
 
         if (deathParticles != null)
-        {
-            Instantiate(
-                deathParticles,
-                transform.position,
-                Quaternion.identity
-            );
-        }
-        if (ammoBoxPrefab != null)
-        {
-            Instantiate(
-                ammoBoxPrefab,
-                new Vector2(
-                    transform.position.x,
-                    transform.position.y + dropOffsetY
-                ),
-                Quaternion.identity
-            );
-        }
-        Debug.Log("DeathSequence terminó para: " + gameObject.name, this);
-    }
-    private void OnDisable()
-    {
-        Debug.LogWarning(
-            "EnemyLife se desactivó: " + gameObject.name,
-            this
-        );
-    }
+            Instantiate(deathParticles, transform.position, Quaternion.identity);
 
-    private void OnDestroy()
-    {
-        Debug.LogWarning(
-            "EnemyLife fue destruido: " + gameObject.name,
-            this
-        );
+        if (ammoBoxPrefab != null)
+            Instantiate(ammoBoxPrefab, transform.position + Vector3.up * dropOffsetY, Quaternion.identity);
+
+        yield return new WaitForSeconds(5f);
+
+        Destroy(gameObject);
     }
 }

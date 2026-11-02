@@ -4,6 +4,7 @@ public class Pausemenu : MonoBehaviour
     public GameObject Pausepanel;
     public GameObject Settingspanel;
     public GameObject Creditspanel;
+    [SerializeField] private GameManager gameManager;
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -20,6 +21,8 @@ public class Pausemenu : MonoBehaviour
     }
     public void Pause()
     {
+        gameManager.HideHealthBar();
+
         Pausepanel.SetActive(true);
         Settingspanel.SetActive(false);
         Creditspanel.SetActive(false);
@@ -31,6 +34,8 @@ public class Pausemenu : MonoBehaviour
         Pausepanel.SetActive(false);
         Settingspanel.SetActive(false);
         Creditspanel.SetActive(false);
+
+        gameManager.ShowHealthBar();
 
         Time.timeScale = 1f;
     }

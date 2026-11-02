@@ -47,18 +47,6 @@ public class AudioManager : MonoBehaviour
         SfxSource.outputAudioMixerGroup = mixer.FindMatchingGroups("SFX")[0];
         uiSource.outputAudioMixerGroup = mixer.FindMatchingGroups("UI")[0];
     }
-    private AudioMixerGroup GetAudioGroup(string groupName)
-    {
-        AudioMixerGroup[] groups = mixer.FindMatchingGroups(groupName);
-
-        if (groups.Length > 0)
-        {
-            return groups[0];
-        }
-
-        Debug.LogError("AudioMixer group not found: " + groupName);
-        return null;
-    }
     private void Start()
     {
         string scene = SceneManager.GetActiveScene().name;
@@ -100,6 +88,29 @@ public class AudioManager : MonoBehaviour
         if (uiSource != null && buttonSound != null)
         {
             uiSource.PlayOneShot(buttonSound);
+        }
+    }
+    public void PlayRun()
+    {
+        if (SfxSource == null || runSound == null)
+            return;
+
+        if (SfxSource.clip != runSound)
+        {
+            SfxSource.clip = runSound;
+            SfxSource.loop = true;
+        }
+
+        if (!SfxSource.isPlaying)
+            SfxSource.Play();
+    }
+    public void StopRun()
+    {
+        if (SfxSource != null && SfxSource.clip == runSound)
+        {
+            SfxSource.Stop();
+            SfxSource.loop = false;
+            SfxSource.clip = null;
         }
     }
     public void PlayGameOver() => PlayMusic(gameOverMusic);

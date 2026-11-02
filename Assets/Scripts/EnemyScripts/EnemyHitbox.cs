@@ -50,7 +50,10 @@ public class EnemyHitbox : MonoBehaviour
         {
             return;
         }
+        PlayerInvulnerability playerInvulnerability = playerLife.GetComponent<PlayerInvulnerability>();
 
+        if (playerInvulnerability != null && playerInvulnerability.IsInvulnerable)
+            return;
         hasHit = true;
 
         playerLife.TakeDamage(damage);

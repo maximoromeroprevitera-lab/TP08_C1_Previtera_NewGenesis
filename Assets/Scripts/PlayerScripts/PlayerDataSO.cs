@@ -8,5 +8,5 @@ public class PlayerDataSO : ScriptableObject
     public float jumpForce = 10f;
 
     [Header("Combat")]
-    public int maxHealth = 3;
+    public int maxHealth = 6;
 }

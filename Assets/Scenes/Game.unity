@@ -256,6 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::VictoryManager
   victoryPanel: {fileID: 901625205}
   playAgainButton: {fileID: 980360173}
+  gameManager: {fileID: 1772328755}
 --- !u!1 &33448967 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2508160380981877166, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
@@ -2372,6 +2373,7 @@ MonoBehaviour:
   Pausepanel: {fileID: 1121905372}
   Settingspanel: {fileID: 33448967}
   Creditspanel: {fileID: 75612700}
+  gameManager: {fileID: 1772328755}
 --- !u!1 &901625205 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5018170058399716484, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
@@ -3075,6 +3077,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BackgroundParallax
   player: {fileID: 219110974}
   parallaxSpeed: 0.1
+--- !u!1 &1410654458 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1003225658202619228, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+  m_PrefabInstance: {fileID: 8277421285482773918}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1410654460 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5236491859882739278, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+  m_PrefabInstance: {fileID: 8277421285482773918}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1410654458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &1662257687
 GameObject:
   m_ObjectHideFlags: 0
@@ -3354,7 +3372,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   GameOverPanel: {fileID: 173490210}
-  deathDelay: 2
+  healthBar: {fileID: 1410654458}
+  deathDelay: 1.5
 --- !u!1 &1784501046
 GameObject:
   m_ObjectHideFlags: 0
@@ -3830,6 +3849,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1784501047}
     m_Modifications:
+    - target: {fileID: -4734710021587702859, guid: 7a93ac16e4cb75841badc4d9d2daaaa7, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4946728758895252, guid: 7a93ac16e4cb75841badc4d9d2daaaa7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 45.93137
@@ -3991,6 +4014,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1149014569859582727 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3756294237692126471, guid: 7a93ac16e4cb75841badc4d9d2daaaa7, type: 3}
+  m_PrefabInstance: {fileID: 1149014569859582723}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1149014569859582725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d8400c2787d3f845b472f8d18f096eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLife
 --- !u!212 &1149014569859582734 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 4424408904070774721, guid: 7a93ac16e4cb75841badc4d9d2daaaa7, type: 3}
@@ -4015,6 +4049,18 @@ PrefabInstance:
     - target: {fileID: 841887229053421685, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004452256131898937, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8156863
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004452256131898937, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: m_Color.g
+      value: 0.34901962
+      objectReference: {fileID: 0}
+    - target: {fileID: 1004452256131898937, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: m_Color.r
+      value: 0.60784316
       objectReference: {fileID: 0}
     - target: {fileID: 1270678386198650149, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
       propertyPath: m_Pivot.x
@@ -4177,6 +4223,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OpenCredits
       objectReference: {fileID: 0}
+    - target: {fileID: 2337242911878037112, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2387311059924204527, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -4197,6 +4247,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3364663602122484027, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: playerLife
+      value: 
+      objectReference: {fileID: 1149014569859582727}
+    - target: {fileID: 3364663602122484027, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: healthSlider
+      value: 
+      objectReference: {fileID: 1410654460}
+    - target: {fileID: 3848653392788860444, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -283
+      objectReference: {fileID: 0}
+    - target: {fileID: 3848653392788860444, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 123
+      objectReference: {fileID: 0}
     - target: {fileID: 4269267313761289770, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -4216,6 +4282,34 @@ PrefabInstance:
     - target: {fileID: 4727190480990564622, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 132
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236491859882739278, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: m_MaxValue
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236491859882739278, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: m_HandleRect
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236491859882739278, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: m_Interactable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236491859882739278, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: m_TargetGraphic
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236491859882739278, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 0.10323947
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236491859882739278, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 0.10323947
+      objectReference: {fileID: 0}
+    - target: {fileID: 5236491859882739278, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 0.72955966
       objectReference: {fileID: 0}
     - target: {fileID: 6221768493214727504, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
       propertyPath: victoryPanel
@@ -4277,6 +4371,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7859946478265153341, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7876289365604026249, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -4318,46 +4416,15 @@ PrefabInstance:
       value: 83
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7014230494618730830, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
+    - {fileID: 4022601556178520022, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7014230494618730830, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8277421285482773921}
     - targetCorrespondingSourceObject: {fileID: 798262057683092817, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8277421285482773924}
   m_SourcePrefab: {fileID: 100100000, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
---- !u!1 &8277421285482773919 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7014230494618730830, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
-  m_PrefabInstance: {fileID: 8277421285482773918}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8277421285482773920 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7904745736888996964, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}
-  m_PrefabInstance: {fileID: 8277421285482773918}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8277421285482773919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
---- !u!114 &8277421285482773921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8277421285482773919}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03b947ee8700fac4f9410576434b632f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AmmoCounter
-  ammoText: {fileID: 8277421285482773920}
-  victoryPanel: {fileID: 901625205}
 --- !u!1 &8277421285482773922 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 798262057683092817, guid: 37cda6683b3fee748b46ba1355aa9307, type: 3}

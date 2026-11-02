@@ -24,7 +24,8 @@ public class PlayerJump : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
-            AudioManager.Instance.PlayJump();
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlayJump();
 
             animator.SetBool("Grounded", false);
 

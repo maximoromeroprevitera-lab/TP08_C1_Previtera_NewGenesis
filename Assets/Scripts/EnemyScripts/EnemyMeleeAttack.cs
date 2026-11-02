@@ -7,7 +7,6 @@ public class EnemyMeleeAttack : MonoBehaviour
     [SerializeField] private Transform shootPoint;
     [Header("Attack")]
     [SerializeField] private int damage = 1;
-    [SerializeField] private float attackRange = 1.5f;
     [SerializeField] private float attackCooldown = 1.5f;
     [Header("Attack Timing")]
     [SerializeField] private float firstHitDelay = 0.25f;
@@ -19,6 +18,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     [SerializeField] private float knockbackUpForce = 2f;
     private EnemyStateMachine stateMachine;
     private EnemyLife enemyLife;
+    private EnemyFollow enemyFollow;
     private PlayerLife playerLife;
     private float cooldownTimer;
     private bool isAttacking;
@@ -26,6 +26,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     {
         stateMachine = GetComponent<EnemyStateMachine>();
         enemyLife = GetComponent<EnemyLife>();
+        enemyFollow = GetComponent<EnemyFollow>();
     }
     private void Start()
     {
@@ -34,15 +35,13 @@ public class EnemyMeleeAttack : MonoBehaviour
     }
     private void Update()
     {
-        if (enemyLife.IsDead || playerLife == null || playerLife.IsDead ||
-            isAttacking)
-        {
+        if (enemyLife.IsDead || playerLife == null ||
+            playerLife.IsDead || isAttacking)
             return;
-        }
 
         cooldownTimer -= Time.deltaTime;
 
-        if (cooldownTimer <= 0f && IsPlayerInRange())
+        if (cooldownTimer <= 0f && enemyFollow.PlayerSeen)
         {
             StartCoroutine(AttackCombo());
             cooldownTimer = attackCooldown;
@@ -53,50 +52,40 @@ public class EnemyMeleeAttack : MonoBehaviour
         isAttacking = true;
 
         stateMachine.PlayAttack1();
+
         yield return new WaitForSeconds(firstHitDelay);
-        if (IsPlayerInRange()) SpawnHitbox();
+        SpawnHitbox();
 
         yield return new WaitForSeconds(
             Mathf.Max(0f, firstAttackDuration - firstHitDelay)
         );
 
         if (enemyLife.IsDead)
-        {
-            isAttacking = false;
             yield break;
-        }
 
-        if (IsPlayerInRange())
-        {
-            stateMachine.PlayAttack2();
-            yield return new WaitForSeconds(secondHitDelay);
-            if (IsPlayerInRange()) SpawnHitbox();
+        stateMachine.PlayAttack2();
 
-            yield return new WaitForSeconds(
-                Mathf.Max(0f, secondAttackDuration - secondHitDelay)
-            );
-        }
+        yield return new WaitForSeconds(secondHitDelay);
+        SpawnHitbox();
+
+        yield return new WaitForSeconds(
+            Mathf.Max(0f, secondAttackDuration - secondHitDelay)
+        );
 
         if (!enemyLife.IsDead)
-        {
             stateMachine.FinishAttack();
-        }
 
         isAttacking = false;
     }
-    private bool IsPlayerInRange()
-    {
-        return playerLife != null &&
-               !playerLife.IsDead &&
-               Mathf.Abs(playerLife.transform.position.x - transform.position.x)
-               <= attackRange;
-    }
     private void SpawnHitbox()
     {
-        if (hitboxPrefab == null || shootPoint == null) return;
+        if (hitboxPrefab == null || shootPoint == null)
+            return;
 
         GameObject hitbox = Instantiate(
-            hitboxPrefab, shootPoint.position, shootPoint.rotation
+            hitboxPrefab,
+            shootPoint.position,
+            shootPoint.rotation
         );
 
         EnemyHitbox hitboxScript = hitbox.GetComponent<EnemyHitbox>();
@@ -104,7 +93,10 @@ public class EnemyMeleeAttack : MonoBehaviour
         if (hitboxScript != null)
         {
             hitboxScript.Setup(
-                transform, damage, knockbackForce, knockbackUpForce
+                transform,
+                damage,
+                knockbackForce,
+                knockbackUpForce
             );
         }
     }

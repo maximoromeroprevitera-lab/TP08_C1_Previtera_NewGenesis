@@ -34,6 +34,9 @@ public class EnemyLife : MonoBehaviour
     private void Die()
     {
         isDead = true;
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayDeathEnemy();
         stateMachine.Die();
 
         EnemyFollow follow = GetComponent<EnemyFollow>();

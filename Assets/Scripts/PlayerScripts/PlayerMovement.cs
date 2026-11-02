@@ -3,6 +3,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private PlayerDataSO playerData;
     [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Transform shootPoint;
     private Rigidbody2D rb;
     private Animator animator;
     private PlayerAttack playerAttack;
@@ -10,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerStateMachine stateMachine;
     private PlayerKnockback playerKnockback;
     private float horizontalInput;
+    private Vector3 originalShootPointPosition;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -20,9 +22,10 @@ public class PlayerMovement : MonoBehaviour
         playerKnockback = GetComponent<PlayerKnockback>();
 
         if (spriteRenderer == null)
-        {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        }
+
+        if (shootPoint != null)
+            originalShootPointPosition = shootPoint.localPosition;
     }
     private void Update()
     {
@@ -40,24 +43,35 @@ public class PlayerMovement : MonoBehaviour
         if (horizontalInput < 0)
         {
             spriteRenderer.flipX = true;
+            UpdateShootPoint();
         }
         else if (horizontalInput > 0)
         {
             spriteRenderer.flipX = false;
+            UpdateShootPoint();
         }
 
         UpdateMovementState();
     }
+    private void UpdateShootPoint()
+    {
+        if (shootPoint == null) return;
+
+        float direction = spriteRenderer.flipX ? -1f : 1f;
+
+        shootPoint.localPosition = new Vector3(
+            Mathf.Abs(originalShootPointPosition.x) * direction,
+            originalShootPointPosition.y,
+            originalShootPointPosition.z
+        );
+    }
     private void FixedUpdate()
     {
         if (playerKnockback != null && playerKnockback.IsKnockedBack)
-        {
             return;
-        }
+
         if (playerBackDash.IsDashing)
-        {
             return;
-        }
 
         if (playerAttack.IsAttacking)
         {
@@ -76,23 +90,13 @@ public class PlayerMovement : MonoBehaviour
     }
     private void UpdateMovementState()
     {
-        if (stateMachine == null)
-        {
-            return;
-        }
+        if (stateMachine == null) return;
 
-        if (rb.linearVelocity.y < -0.1f ||
-            rb.linearVelocity.y > 0.1f)
-        {
+        if (rb.linearVelocity.y < -0.1f || rb.linearVelocity.y > 0.1f)
             stateMachine.ChangeState(PlayerState.Jump);
-        }
         else if (Mathf.Abs(horizontalInput) > 0)
-        {
             stateMachine.ChangeState(PlayerState.Run);
-        }
         else
-        {
             stateMachine.ChangeState(PlayerState.Idle);
-        }
     }
 }

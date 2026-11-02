@@ -5,6 +5,7 @@ public class VictoryManager : MonoBehaviour
 {
     [SerializeField] private GameObject victoryPanel;
     [SerializeField] private Button playAgainButton;
+    [SerializeField] private GameManager gameManager;
     private void Start()
     {
         victoryPanel.SetActive(false);
@@ -12,6 +13,8 @@ public class VictoryManager : MonoBehaviour
     }
     public void Win()
     {
+        gameManager.HideHealthBar();
+
         victoryPanel.SetActive(true);
         Time.timeScale = 0f;
     }

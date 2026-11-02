@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 public class PlayerLife : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class PlayerLife : MonoBehaviour
     private Animator animator;
     private bool isDead;
     public bool IsDead => isDead;
+    public int CurrentHealth => currentHealth;
+    public int MaxHealth => playerData != null ? playerData.maxHealth : 0;
+    public event Action<int, int> OnHealthChanged;
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -20,43 +24,42 @@ public class PlayerLife : MonoBehaviour
         }
 
         currentHealth = playerData.maxHealth;
+        OnHealthChanged?.Invoke(currentHealth, MaxHealth);
     }
     public void TakeDamage(int damage)
     {
-        if (isDead)
-        {
+        if (isDead || damage <= 0)
             return;
-        }
-        currentHealth -= damage;
 
-        if (AudioManager.Instance != null)
-        {
-            AudioManager.Instance.PlayPlayerHit();
-        }
+        currentHealth -= damage;
 
         if (currentHealth <= 0)
         {
             currentHealth = 0;
             Die();
-        }
-        else if (animator != null)
-        {
-            animator.SetTrigger("Hurt");
-        }
-    }
-    public void Heal(int amount)
-    {
-        if (isDead || playerData == null)
-        {
             return;
         }
 
+        if (animator != null)
+            animator.SetTrigger("Hurt");
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayPlayerHit();
+
+        OnHealthChanged?.Invoke(currentHealth, MaxHealth);
+
+    }
+    public void Heal(int amount)
+    {
+        if (isDead || playerData == null || amount <= 0)
+            return;
+
         currentHealth += amount;
 
-        if (currentHealth > playerData.maxHealth)
-        {
-            currentHealth = playerData.maxHealth;
-        }
+        if (currentHealth > MaxHealth)
+            currentHealth = MaxHealth;
+
+        OnHealthChanged?.Invoke(currentHealth, MaxHealth);
 
         Debug.Log("Player health: " + currentHealth);
     }
@@ -65,18 +68,12 @@ public class PlayerLife : MonoBehaviour
         isDead = true;
 
         if (animator != null)
-        {
             animator.SetTrigger("Death");
-        }
 
         if (gameManager != null)
-        {
             gameManager.GameOver();
-        }
         else
-        {
             Debug.LogError("PlayerLife: falta asignar GameManager.", this);
-        }
 
         Debug.Log("Player defeated");
     }

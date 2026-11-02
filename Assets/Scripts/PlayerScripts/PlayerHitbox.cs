@@ -36,6 +36,9 @@ public class PlayerHitbox : MonoBehaviour
         }
 
         hasHit = true;
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayHit();
         enemyLife.TakeDamage(damage);
 
         Destroy(gameObject);

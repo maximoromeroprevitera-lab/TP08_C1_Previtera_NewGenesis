@@ -18,6 +18,9 @@ GameObject:
   - component: {fileID: 8006658492315478217}
   - component: {fileID: 189664536389895530}
   - component: {fileID: 7541376851543460675}
+  - component: {fileID: -4734710021587702859}
+  - component: {fileID: -8697018221231035513}
+  - component: {fileID: 7576503921561645810}
   - component: {fileID: 6749940585677992725}
   - component: {fileID: 5875272030046105619}
   - component: {fileID: 1970010777060723635}
@@ -131,6 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   playerData: {fileID: 11400000, guid: 74fdb166a5d684a4b8dc3891b629dd2c, type: 2}
   spriteRenderer: {fileID: 4424408904070774721}
+  shootPoint: {fileID: 0}
 --- !u!114 &3756294237692126471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,7 +178,7 @@ MonoBehaviour:
   animator: {fileID: 1970010777060723635}
   spriteRenderer: {fileID: 4424408904070774721}
   rb: {fileID: 6749940585677992725}
-  doubleTapTime: 1
+  doubleTapTime: 2
   shortDashDistance: 1.5
   fullDashDistance: 3
   shortDashDuration: 0.25
@@ -224,6 +228,51 @@ MonoBehaviour:
   attack1Delay: 0.2
   attack2Delay: 0.2
   attack3Delay: 0.25
+--- !u!114 &-4734710021587702859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555635779255779608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccebde1b0edc6bb4584a4be723418743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerRoll
+  animator: {fileID: 1970010777060723635}
+  rb: {fileID: 6749940585677992725}
+  playerCollider: {fileID: 5875272030046105619}
+  rollSpeed: 7
+  rollDuration: 0.5
+  rollColliderSize: {x: 0.6, y: 0.8}
+  rollColliderOffset: {x: 0, y: -0.3}
+--- !u!114 &-8697018221231035513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555635779255779608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46c2473ef206a8a42be7fd3d1cdc6e09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInvulnerability
+  invulnerabilityDuration: 1
+--- !u!114 &7576503921561645810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555635779255779608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785280a6095480b43a6e077fee72efd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerRunSound
+  runSoundInterval: 0.3
 --- !u!50 &6749940585677992725
 Rigidbody2D:
   serializedVersion: 5
@@ -239,7 +288,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 3
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2

@@ -4,11 +4,14 @@ using System.Collections;
 public class GameManager : MonoBehaviour
 {
     public GameObject GameOverPanel;
+    [SerializeField] private GameObject healthBar;
     public float deathDelay = 2f;
     private bool gameEnded;
     private void Start()
     {
         GameOverPanel.SetActive(false);
+        healthBar.SetActive(true);
+
         Time.timeScale = 1f;
     }
     public void GameOver()
@@ -16,7 +19,11 @@ public class GameManager : MonoBehaviour
         if (!gameEnded)
         {
             gameEnded = true;
-            AudioManager.Instance.PlayGameOver(); // frena la música y suena el game over al morir
+
+            HideHealthBar();
+
+            AudioManager.Instance.PlayGameOver();
+
             StartCoroutine(ShowGameOver());
         }
     }
@@ -26,6 +33,14 @@ public class GameManager : MonoBehaviour
 
         GameOverPanel.SetActive(true);
         Time.timeScale = 0f;
+    }
+    public void HideHealthBar()
+    {
+        healthBar.SetActive(false);
+    }
+    public void ShowHealthBar()
+    {
+        healthBar.SetActive(true);
     }
     public void Retry()
     {

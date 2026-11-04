@@ -38,6 +38,8 @@ public class PlayerRoll : MonoBehaviour
 
         stateMachine.ChangeState(PlayerState.Roll);
         animator.Play("Roll", 0, 0f);
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlaySlide();
 
         playerCollider.size = rollColliderSize;
         playerCollider.offset = rollColliderOffset;

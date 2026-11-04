@@ -5,6 +5,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject hitboxPrefab;
     [SerializeField] private Transform shootPoint;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     [Header("Attack")]
     [SerializeField] private int damage = 1;
     [SerializeField] private float attackCooldown = 1.5f;
@@ -27,6 +28,9 @@ public class EnemyMeleeAttack : MonoBehaviour
         stateMachine = GetComponent<EnemyStateMachine>();
         enemyLife = GetComponent<EnemyLife>();
         enemyFollow = GetComponent<EnemyFollow>();
+
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
     private void Start()
     {
@@ -50,27 +54,21 @@ public class EnemyMeleeAttack : MonoBehaviour
     private IEnumerator AttackCombo()
     {
         isAttacking = true;
-
         stateMachine.PlayAttack1();
 
         yield return new WaitForSeconds(firstHitDelay);
         SpawnHitbox();
 
-        yield return new WaitForSeconds(
-            Mathf.Max(0f, firstAttackDuration - firstHitDelay)
-        );
+        yield return new WaitForSeconds(firstAttackDuration - firstHitDelay);
 
-        if (enemyLife.IsDead)
-            yield break;
+        if (enemyLife.IsDead) yield break;
 
         stateMachine.PlayAttack2();
 
         yield return new WaitForSeconds(secondHitDelay);
         SpawnHitbox();
 
-        yield return new WaitForSeconds(
-            Mathf.Max(0f, secondAttackDuration - secondHitDelay)
-        );
+        yield return new WaitForSeconds(secondAttackDuration - secondHitDelay);
 
         if (!enemyLife.IsDead)
             stateMachine.FinishAttack();
@@ -88,16 +86,20 @@ public class EnemyMeleeAttack : MonoBehaviour
             shootPoint.rotation
         );
 
+        BoxCollider2D box = hitbox.GetComponent<BoxCollider2D>();
+
+        if (box != null && spriteRenderer != null)
+        {
+            Vector2 offset = box.offset;
+            offset.x = spriteRenderer.flipX
+                ? -Mathf.Abs(offset.x)
+                : Mathf.Abs(offset.x);
+
+            box.offset = offset;
+        }
         EnemyHitbox hitboxScript = hitbox.GetComponent<EnemyHitbox>();
 
         if (hitboxScript != null)
-        {
-            hitboxScript.Setup(
-                transform,
-                damage,
-                knockbackForce,
-                knockbackUpForce
-            );
-        }
+            hitboxScript.Setup(transform, damage, knockbackForce, knockbackUpForce);
     }
 }

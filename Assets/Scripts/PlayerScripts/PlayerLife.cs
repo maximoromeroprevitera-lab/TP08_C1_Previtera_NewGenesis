@@ -63,9 +63,12 @@ public class PlayerLife : MonoBehaviour
 
         Debug.Log("Player health: " + currentHealth);
     }
-    private void Die()
+        private void Die()
     {
         isDead = true;
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayDeath();
 
         if (animator != null)
             animator.SetTrigger("Death");
@@ -77,4 +80,5 @@ public class PlayerLife : MonoBehaviour
 
         Debug.Log("Player defeated");
     }
+
 }

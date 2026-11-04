@@ -47,13 +47,19 @@ public class AudioManager : MonoBehaviour
         SfxSource.outputAudioMixerGroup = mixer.FindMatchingGroups("SFX")[0];
         uiSource.outputAudioMixerGroup = mixer.FindMatchingGroups("UI")[0];
     }
-    private void Start()
+    private void OnEnable()
     {
-        string scene = SceneManager.GetActiveScene().name;
-
-        if (scene == "MainMenu")
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "MainMenu")
             PlayMusic(mainMenuMusic);
-        else if (scene == "GameOver")
+        else if (scene.name == "GameOver")
             PlayMusic(gameOverMusic);
         else
             PlayMusic(gameplayMusic);
@@ -62,6 +68,10 @@ public class AudioManager : MonoBehaviour
     {
         if (clip == null) return;
 
+        if (musicSource.clip == clip && musicSource.isPlaying)
+            return;
+
+        musicSource.Stop();
         musicSource.clip = clip;
         musicSource.loop = true;
         musicSource.Play();

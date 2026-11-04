@@ -10,11 +10,13 @@ public class EnemyLife : MonoBehaviour
     [SerializeField] private float deathAnimationTime = 1f;
     private int currentHealth;
     private EnemyStateMachine stateMachine;
+    private EnemyFlash enemyFlash;
     private bool isDead;
     public bool IsDead => isDead;
     private void Awake()
     {
         stateMachine = GetComponent<EnemyStateMachine>();
+        enemyFlash = GetComponent<EnemyFlash>();
     }
     private void Start()
     {
@@ -28,6 +30,9 @@ public class EnemyLife : MonoBehaviour
         currentHealth = Mathf.Max(0, currentHealth - damage);
         healthBar.SetHealth(currentHealth, maxHealth);
 
+        if (currentHealth > 0 && enemyFlash != null)
+            enemyFlash.Flash();
+
         if (currentHealth == 0)
             Die();
     }
@@ -37,6 +42,7 @@ public class EnemyLife : MonoBehaviour
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayDeathEnemy();
+
         stateMachine.Die();
 
         EnemyFollow follow = GetComponent<EnemyFollow>();

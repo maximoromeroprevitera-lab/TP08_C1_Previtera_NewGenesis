@@ -57,13 +57,6 @@ public class HealthPickableSpawner : MonoBehaviour
     }
     private bool IsFree(float x)
     {
-        foreach (Barrel barrel in FindObjectsByType<Barrel>(FindObjectsSortMode.None))
-        {
-            if (Mathf.Abs(barrel.transform.position.x - x) < clearance)
-            {
-                return false;
-            }
-        }
         foreach (EnemyLife enemy in FindObjectsByType<EnemyLife>(FindObjectsSortMode.None))
         {
             if (Mathf.Abs(enemy.transform.position.x - x) < clearance)

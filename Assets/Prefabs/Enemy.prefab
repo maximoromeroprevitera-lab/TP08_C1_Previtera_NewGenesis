@@ -396,6 +396,8 @@ MonoBehaviour:
   ammoBoxPrefab: {fileID: 1097126900871704949, guid: 45ec0ec5c8970c74c853bebb6d57159f, type: 3}
   dropOffsetY: -0.6
   deathAnimationTime: 1
+  dropKey: 1
+  keyPrefab: {fileID: 6801191980584068905, guid: 63b3cb5cccf9e064a915cc4a6b469320, type: 3}
 --- !u!114 &253975721785999309
 MonoBehaviour:
   m_ObjectHideFlags: 0

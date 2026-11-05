@@ -8,6 +8,8 @@ public class EnemyLife : MonoBehaviour
     [SerializeField] private GameObject ammoBoxPrefab;
     [SerializeField] private float dropOffsetY = -0.75f;
     [SerializeField] private float deathAnimationTime = 1f;
+    [SerializeField] private bool dropKey;
+    [SerializeField] private GameObject keyPrefab;
     private int currentHealth;
     private EnemyStateMachine stateMachine;
     private EnemyFlash enemyFlash;
@@ -79,7 +81,10 @@ public class EnemyLife : MonoBehaviour
 
         if (deathParticles != null)
             Instantiate(deathParticles, transform.position, Quaternion.identity);
-
+        if (dropKey && keyPrefab != null)
+        {
+            Instantiate(keyPrefab, transform.position, Quaternion.identity);
+        }
         if (ammoBoxPrefab != null)
             Instantiate(ammoBoxPrefab, transform.position + Vector3.up * dropOffsetY, Quaternion.identity);
 

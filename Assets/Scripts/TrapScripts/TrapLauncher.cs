@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 public class TrapLauncher : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class TrapLauncher : MonoBehaviour
     [SerializeField] private Transform firePoint;
     [SerializeField] private float fireInterval = 2f;
     private bool isActive = true;
+    private List<FireballProjectile> activeFireballs = new List<FireballProjectile>();
     private void Start()
     {
         InvokeRepeating(nameof(Shoot), fireInterval, fireInterval);
@@ -15,19 +17,47 @@ public class TrapLauncher : MonoBehaviour
         if (!isActive || fireballPrefab == null)
             return;
 
+        activeFireballs.RemoveAll(fireball => fireball == null);
+
         Vector3 spawnPosition = firePoint != null
             ? firePoint.position
             : transform.position;
 
-        Instantiate(fireballPrefab, spawnPosition, Quaternion.identity);
+        GameObject newFireball = Instantiate(
+            fireballPrefab,
+            spawnPosition,
+            Quaternion.identity
+        );
+
+        FireballProjectile projectile =
+            newFireball.GetComponent<FireballProjectile>();
+
+        if (projectile != null)
+            activeFireballs.Add(projectile);
     }
     public void SetTrapActive(bool active)
     {
         isActive = active;
 
         if (active)
-            InvokeRepeating(nameof(Shoot), fireInterval, fireInterval);
+        {
+            InvokeRepeating(
+                nameof(Shoot),
+                fireInterval,
+                fireInterval
+            );
+        }
         else
+        {
             CancelInvoke(nameof(Shoot));
+
+            foreach (FireballProjectile fireball in activeFireballs)
+            {
+                if (fireball != null)
+                    Destroy(fireball.gameObject);
+            }
+
+            activeFireballs.Clear();
+        }
     }
 }

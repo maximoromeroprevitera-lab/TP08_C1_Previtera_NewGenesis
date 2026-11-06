@@ -15,6 +15,7 @@ public class EnemyLife : MonoBehaviour
     private EnemyFlash enemyFlash;
     private bool isDead;
     public bool IsDead => isDead;
+    public event System.Action OnDied;
     private void Awake()
     {
         stateMachine = GetComponent<EnemyStateMachine>();
@@ -41,6 +42,7 @@ public class EnemyLife : MonoBehaviour
     private void Die()
     {
         isDead = true;
+        OnDied?.Invoke();
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayDeathEnemy();

@@ -3,6 +3,7 @@ public class TrapSwitch : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private TrapGroup trapGroup;
+    [SerializeField] private SubfloorEncounter encounter;
     private bool activated;
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -18,6 +19,7 @@ public class TrapSwitch : MonoBehaviour
             return;
 
         trapGroup.DisableTraps();
+        encounter.StartEncounter();
 
         activated = true;
 

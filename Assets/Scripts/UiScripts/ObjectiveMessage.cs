@@ -11,7 +11,7 @@ public class ObjectiveMessage : MonoBehaviour
     {
         rectTransform = objectiveText.GetComponent<RectTransform>();
 
-        objectiveText.text = "¡SOBREVIVE!\nSobrevive 100 segundos y llega a la puerta del bar.";
+        objectiveText.text = "!Derrota a los enemigos y encuentra la llave del templo.";
         objectiveText.gameObject.SetActive(true);
 
         StartCoroutine(ShowObjective());

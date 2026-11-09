@@ -3,15 +3,12 @@ public class PlayerJump : MonoBehaviour
 {
     [SerializeField] private PlayerDataSO playerData;
     private Rigidbody2D rb;
-    private Animator animator;
     private PlayerAttack playerAttack;
     private PlayerBackDash playerBackDash;
     private bool isGrounded;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-
         playerAttack = GetComponent<PlayerAttack>();
         playerBackDash = GetComponent<PlayerBackDash>();
     }
@@ -27,8 +24,6 @@ public class PlayerJump : MonoBehaviour
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayJump();
 
-            animator.SetBool("Grounded", false);
-
             rb.linearVelocity = new Vector2(
                 rb.linearVelocity.x,
                 playerData.jumpForce
@@ -42,7 +37,6 @@ public class PlayerJump : MonoBehaviour
         if (collision.gameObject.GetComponent<Ground>() != null)
         {
             isGrounded = true;
-            animator.SetBool("Grounded", true);
         }
     }
 }

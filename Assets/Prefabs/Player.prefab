@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: -4734710021587702859}
   - component: {fileID: -8697018221231035513}
   - component: {fileID: 7576503921561645810}
+  - component: {fileID: 3827729590294769428}
   - component: {fileID: 6749940585677992725}
   - component: {fileID: 5875272030046105619}
   - component: {fileID: 1970010777060723635}
@@ -286,6 +287,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785280a6095480b43a6e077fee72efd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRunSound
+--- !u!114 &3827729590294769428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555635779255779608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46543a49284e7da428546fe958c8bd9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
 --- !u!50 &6749940585677992725
 Rigidbody2D:
   serializedVersion: 5

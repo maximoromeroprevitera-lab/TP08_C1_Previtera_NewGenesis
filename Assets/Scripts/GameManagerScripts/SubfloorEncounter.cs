@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 public class SubfloorEncounter : MonoBehaviour
 {
     [Header("Enemy Settings")]
@@ -11,7 +12,11 @@ public class SubfloorEncounter : MonoBehaviour
     [SerializeField] private float spawnDelay = 3f;
     [Header("Doors")]
     [SerializeField] private TileDoor[] doorsToOpen;
-    [SerializeField] private GameObject finalDoor;
+    [Header("Final Door")]
+    [SerializeField] private GameObject finalDoorPrefab;
+    [SerializeField] private Tilemap groundTilemap;
+    [SerializeField]
+    private Vector3Int finalDoorCell = new Vector3Int(-19, -34, 0);
     private int remainingEnemies;
     private bool encounterStarted;
     private bool encounterCompleted;
@@ -79,9 +84,17 @@ public class SubfloorEncounter : MonoBehaviour
                 door.OpenDoor();
         }
 
-        if (finalDoor != null)
-            finalDoor.SetActive(true);
+        if (finalDoorPrefab != null && groundTilemap != null)
+        {
+            Vector3 doorPosition =
+                groundTilemap.GetCellCenterWorld(finalDoorCell);
 
-        Debug.Log("Encounter completed!");
+            Instantiate(
+                finalDoorPrefab,
+                doorPosition,
+                Quaternion.identity
+            );
+            Debug.Log("Final door appeared!");
+        }
     }
 }

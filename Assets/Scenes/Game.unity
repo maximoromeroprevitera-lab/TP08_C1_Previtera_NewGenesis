@@ -26386,6 +26386,7 @@ Transform:
   - {fileID: 1306237608}
   - {fileID: 1278533390}
   - {fileID: 243688713}
+  - {fileID: 1741435611}
   m_Father: {fileID: 1753137646}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &775693890
@@ -55602,7 +55603,9 @@ MonoBehaviour:
   maximumEnemies: 5
   spawnDelay: 3
   doorsToOpen: []
-  finalDoor: {fileID: 4330237917136782308, guid: 2f6d6d52a344b7244bb2a0d7f6c513dc, type: 3}
+  finalDoorPrefab: {fileID: 4330237917136782308, guid: 2f6d6d52a344b7244bb2a0d7f6c513dc, type: 3}
+  groundTilemap: {fileID: 221995837}
+  finalDoorCell: {x: -19, y: -34, z: 0}
 --- !u!1 &1398757381
 GameObject:
   m_ObjectHideFlags: 0
@@ -55908,6 +55911,37 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1741435610
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1741435611}
+  m_Layer: 0
+  m_Name: FinalDoorSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1741435611
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1741435610}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.38, y: 0.54, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 768792843}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1753137645
 GameObject:
   m_ObjectHideFlags: 0
@@ -56713,7 +56747,9 @@ MonoBehaviour:
   spawnDelay: 3
   doorsToOpen:
   - {fileID: 509149469}
-  finalDoor: {fileID: 0}
+  finalDoorPrefab: {fileID: 0}
+  groundTilemap: {fileID: 0}
+  finalDoorCell: {x: -19, y: -34, z: 0}
 --- !u!1 &2140038852
 GameObject:
   m_ObjectHideFlags: 0

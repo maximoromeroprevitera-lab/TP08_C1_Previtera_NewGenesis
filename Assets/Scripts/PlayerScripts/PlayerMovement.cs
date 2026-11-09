@@ -5,7 +5,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Transform shootPoint;
     private Rigidbody2D rb;
-    private Animator animator;
     private PlayerAttack playerAttack;
     private PlayerBackDash playerBackDash;
     private PlayerStateMachine stateMachine;
@@ -15,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         playerAttack = GetComponent<PlayerAttack>();
         playerBackDash = GetComponent<PlayerBackDash>();
         stateMachine = GetComponent<PlayerStateMachine>();
@@ -32,13 +30,14 @@ public class PlayerMovement : MonoBehaviour
         if (playerAttack.IsAttacking || playerBackDash.IsDashing)
         {
             horizontalInput = 0f;
-            animator.SetFloat("Speed", 0f);
             return;
         }
-
+        if (stateMachine.IsStunned() || playerAttack.IsAttacking || playerBackDash.IsDashing)
+        {
+            horizontalInput = 0f;
+            return;
+        }
         horizontalInput = Input.GetAxisRaw("Horizontal");
-
-        animator.SetFloat("Speed", Mathf.Abs(horizontalInput));
 
         if (horizontalInput < 0)
         {

@@ -14,14 +14,20 @@ public enum PlayerState
 public class PlayerStateMachine : MonoBehaviour
 {
     public PlayerState CurrentState { get; private set; }
+    public event System.Action<PlayerState> OnStateChanged;
+
     private void Start()
     {
         ChangeState(PlayerState.Idle);
     }
     public void ChangeState(PlayerState newState)
     {
+        if (CurrentState == newState) return;
+
         CurrentState = newState;
+        OnStateChanged?.Invoke(newState);
     }
+
     public bool CanMove()
     {
         return CurrentState == PlayerState.Idle ||
@@ -38,5 +44,10 @@ public class PlayerStateMachine : MonoBehaviour
         return CurrentState == PlayerState.Idle ||
                CurrentState == PlayerState.Run ||
                CurrentState == PlayerState.Jump;
+    }
+    public bool IsStunned()
+    {
+        return CurrentState == PlayerState.Hurt ||
+               CurrentState == PlayerState.Death;
     }
 }

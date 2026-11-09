@@ -4,8 +4,9 @@ public class PlayerLife : MonoBehaviour
 {
     public GameManager gameManager;
     [SerializeField] private PlayerDataSO playerData;
+    [SerializeField] private float hurtDuration = 0.4f;
     private int currentHealth;
-    private Animator animator;
+    private PlayerStateMachine stateMachine;
     private bool isDead;
     public bool IsDead => isDead;
     public int CurrentHealth => currentHealth;
@@ -13,7 +14,7 @@ public class PlayerLife : MonoBehaviour
     public event Action<int, int> OnHealthChanged;
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        stateMachine = GetComponent<PlayerStateMachine>();
     }
     private void Start()
     {
@@ -40,14 +41,19 @@ public class PlayerLife : MonoBehaviour
             return;
         }
 
-        if (animator != null)
-            animator.SetTrigger("Hurt");
+        stateMachine.ChangeState(PlayerState.Hurt);
+        CancelInvoke(nameof(FinishHurt));
+        Invoke(nameof(FinishHurt), hurtDuration);
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayPlayerHit();
 
         OnHealthChanged?.Invoke(currentHealth, MaxHealth);
-
+    }
+    private void FinishHurt()
+    {
+        if (!isDead)
+            stateMachine.ChangeState(PlayerState.Idle);
     }
     public void Heal(int amount)
     {
@@ -63,15 +69,14 @@ public class PlayerLife : MonoBehaviour
 
         Debug.Log("Player health: " + currentHealth);
     }
-        private void Die()
+    private void Die()
     {
         isDead = true;
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayDeath();
 
-        if (animator != null)
-            animator.SetTrigger("Death");
+        stateMachine.ChangeState(PlayerState.Death);
 
         if (gameManager != null)
             gameManager.GameOver();
@@ -80,5 +85,4 @@ public class PlayerLife : MonoBehaviour
 
         Debug.Log("Player defeated");
     }
-
 }

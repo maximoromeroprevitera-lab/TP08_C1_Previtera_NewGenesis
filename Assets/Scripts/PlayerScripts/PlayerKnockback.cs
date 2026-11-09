@@ -1,8 +1,8 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 public class PlayerKnockback : MonoBehaviour
 {
-    [SerializeField] private float knockbackDuration = 0.2f;
+    [SerializeField] private PlayerDataSO playerData;
     private Rigidbody2D rb;
     private Coroutine knockbackCoroutine;
     public bool IsKnockedBack { get; private set; }
@@ -26,7 +26,7 @@ public class PlayerKnockback : MonoBehaviour
         rb.linearVelocity = Vector2.zero;
         rb.linearVelocity = force;
 
-        yield return new WaitForSeconds(knockbackDuration);
+        yield return new WaitForSeconds(playerData.knockbackDuration);
 
         IsKnockedBack = false;
         knockbackCoroutine = null;

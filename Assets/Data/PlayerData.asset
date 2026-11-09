@@ -15,3 +15,19 @@ MonoBehaviour:
   moveSpeed: 7
   jumpForce: 9
   maxHealth: 6
+  attack1Damage: 1
+  attack2Damage: 1
+  attack3Damage: 2
+  attack1Delay: 0.2
+  attack2Delay: 0.2
+  attack3Delay: 0.25
+  comboResetTime: 1
+  doubleTapTime: 2
+  shortDashDistance: 2
+  fullDashDistance: 6
+  shortDashDuration: 0.25
+  fullDashDuration: 0.4
+  rollSpeed: 7
+  rollDuration: 0.5
+  invulnerabilityDuration: 1
+  knockbackDuration: 0.2

@@ -1,8 +1,9 @@
 using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private PlayerDataSO playerData;
     [SerializeField] private Animator animator;
-    [SerializeField] private float comboResetTime = 1f;
     private PlayerBackDash playerBackDash;
     private PlayerStateMachine stateMachine;
     private int comboIndex;
@@ -14,9 +15,8 @@ public class PlayerAttack : MonoBehaviour
     private void Start()
     {
         if (animator == null)
-        {
             animator = GetComponent<Animator>();
-        }
+
         attackHitbox = GetComponent<PlayerAttackHitbox>();
         playerBackDash = GetComponent<PlayerBackDash>();
         stateMachine = GetComponent<PlayerStateMachine>();
@@ -24,13 +24,11 @@ public class PlayerAttack : MonoBehaviour
     private void Update()
     {
         if (playerBackDash.IsDashing)
-        {
             return;
-        }
 
         if (comboIndex > 0 &&
             !isAttacking &&
-            Time.time - lastAttackTime > comboResetTime)
+            Time.time - lastAttackTime > playerData.comboResetTime)
         {
             comboIndex = 0;
         }
@@ -58,6 +56,7 @@ public class PlayerAttack : MonoBehaviour
         stateMachine.ChangeState(PlayerState.Attack);
 
         animator.Play("Attack" + comboIndex, 0, 0f);
+
         if (attackHitbox != null)
             attackHitbox.StartHitbox(comboIndex);
     }

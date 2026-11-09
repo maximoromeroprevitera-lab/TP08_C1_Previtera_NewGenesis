@@ -2,16 +2,11 @@ using System.Collections;
 using UnityEngine;
 public class PlayerBackDash : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private PlayerDataSO playerData;
     [SerializeField] private Animator animator;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Rigidbody2D rb;
-    [Header("Double Tap")]
-    [SerializeField] private float doubleTapTime = 1f;
-    [Header("BackDash")]
-    [SerializeField] private float shortDashDistance = 1.5f;
-    [SerializeField] private float fullDashDistance = 3f;
-    [SerializeField] private float shortDashDuration = 0.25f;
-    [SerializeField] private float fullDashDuration = 0.4f;
     private PlayerAttack playerAttack;
     private PlayerRoll playerRoll;
     private PlayerStateMachine stateMachine;
@@ -23,7 +18,9 @@ public class PlayerBackDash : MonoBehaviour
     {
         if (animator == null) animator = GetComponent<Animator>();
         if (rb == null) rb = GetComponent<Rigidbody2D>();
-        if (spriteRenderer == null) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         playerAttack = GetComponent<PlayerAttack>();
         playerRoll = GetComponent<PlayerRoll>();
@@ -43,22 +40,34 @@ public class PlayerBackDash : MonoBehaviour
                 firstShift = false;
                 playerRoll.StartRoll(direction);
             }
-            else if (firstShift && Time.time - lastShiftTime <= doubleTapTime)
+            else if (firstShift &&
+                     Time.time - lastShiftTime <= playerData.doubleTapTime)
             {
                 firstShift = false;
-                StartCoroutine(BackDash(fullDashDistance, fullDashDuration));
+
+                StartCoroutine(BackDash(
+                    playerData.fullDashDistance,
+                    playerData.fullDashDuration
+                ));
             }
             else
             {
                 firstShift = true;
-                StartCoroutine(BackDash(shortDashDistance, shortDashDuration));
+
+                StartCoroutine(BackDash(
+                    playerData.shortDashDistance,
+                    playerData.shortDashDuration
+                ));
             }
 
             lastShiftTime = Time.time;
         }
 
-        if (firstShift && Time.time - lastShiftTime > doubleTapTime)
+        if (firstShift &&
+            Time.time - lastShiftTime > playerData.doubleTapTime)
+        {
             firstShift = false;
+        }
     }
     private IEnumerator BackDash(float distance, float duration)
     {
@@ -66,6 +75,7 @@ public class PlayerBackDash : MonoBehaviour
 
         stateMachine.ChangeState(PlayerState.BackDash);
         animator.Play("BackDash", 0, 0f);
+
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlaySlide();
 

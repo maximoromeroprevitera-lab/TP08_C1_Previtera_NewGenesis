@@ -2,12 +2,12 @@ using System.Collections;
 using UnityEngine;
 public class PlayerRoll : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private PlayerDataSO playerData;
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private BoxCollider2D playerCollider;
-    [Header("Roll")]
-    [SerializeField] private float rollSpeed = 5f;
-    [SerializeField] private float rollDuration = 0.65f;
+    [Header("Roll Collider")]
     [SerializeField] private Vector2 rollColliderSize = new Vector2(0.6f, 0.8f);
     [SerializeField] private Vector2 rollColliderOffset = new Vector2(0f, -0.3f);
     private Vector2 originalSize;
@@ -38,6 +38,7 @@ public class PlayerRoll : MonoBehaviour
 
         stateMachine.ChangeState(PlayerState.Roll);
         animator.Play("Roll", 0, 0f);
+
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlaySlide();
 
@@ -49,10 +50,10 @@ public class PlayerRoll : MonoBehaviour
 
         float elapsedTime = 0f;
 
-        while (elapsedTime < rollDuration)
+        while (elapsedTime < playerData.rollDuration)
         {
             rb.linearVelocity = new Vector2(
-                direction * rollSpeed,
+                direction * playerData.rollSpeed,
                 rb.linearVelocity.y
             );
 

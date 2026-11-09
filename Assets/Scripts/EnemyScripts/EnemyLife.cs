@@ -2,12 +2,14 @@ using UnityEngine;
 using System.Collections;
 public class EnemyLife : MonoBehaviour
 {
-    [SerializeField] private int maxHealth = 10;
+    [Header("Enemy Data")]
+    [SerializeField] private EnemyDataSO enemyData;
+    [Header("References")]
     [SerializeField] private EnemyHealthBar healthBar;
     [SerializeField] private GameObject deathParticles;
     [SerializeField] private GameObject ammoBoxPrefab;
-    [SerializeField] private float dropOffsetY = -0.75f;
     [SerializeField] private float deathAnimationTime = 1f;
+    [Header("Key")]
     [SerializeField] private bool dropKey;
     [SerializeField] private GameObject keyPrefab;
     private int currentHealth;
@@ -23,15 +25,15 @@ public class EnemyLife : MonoBehaviour
     }
     private void Start()
     {
-        currentHealth = maxHealth;
-        healthBar.SetHealth(currentHealth, maxHealth);
+        currentHealth = enemyData.maxHealth;
+        healthBar.SetHealth(currentHealth, enemyData.maxHealth);
     }
     public void TakeDamage(int damage)
     {
         if (isDead) return;
 
         currentHealth = Mathf.Max(0, currentHealth - damage);
-        healthBar.SetHealth(currentHealth, maxHealth);
+        healthBar.SetHealth(currentHealth, enemyData.maxHealth);
 
         if (currentHealth > 0 && enemyFlash != null)
             enemyFlash.Flash();
@@ -43,6 +45,11 @@ public class EnemyLife : MonoBehaviour
     {
         isDead = true;
         OnDied?.Invoke();
+
+        GameManager gameManager = FindFirstObjectByType<GameManager>();
+
+        if (gameManager != null)
+            gameManager.AddScore(enemyData.scoreReward);
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayDeathEnemy();
@@ -83,12 +90,9 @@ public class EnemyLife : MonoBehaviour
 
         if (deathParticles != null)
             Instantiate(deathParticles, transform.position, Quaternion.identity);
+
         if (dropKey && keyPrefab != null)
-        {
             Instantiate(keyPrefab, transform.position, Quaternion.identity);
-        }
-        if (ammoBoxPrefab != null)
-            Instantiate(ammoBoxPrefab, transform.position + Vector3.up * dropOffsetY, Quaternion.identity);
 
         yield return new WaitForSeconds(5f);
 

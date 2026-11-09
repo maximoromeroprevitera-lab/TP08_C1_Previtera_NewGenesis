@@ -390,7 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9decb03be9ffc04993dccbdb899e110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyLife
-  maxHealth: 6
+  enemyData: {fileID: 11400000, guid: 99893e33d645e3641bf5e9cf3e2ce0ad, type: 2}
   healthBar: {fileID: 253975721785999309}
   deathParticles: {fileID: 2482280297917236139, guid: f6d8367ac90756442a43248e1110d554, type: 3}
   ammoBoxPrefab: {fileID: 1097126900871704949, guid: 45ec0ec5c8970c74c853bebb6d57159f, type: 3}

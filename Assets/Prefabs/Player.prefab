@@ -151,6 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLife
   gameManager: {fileID: 0}
   playerData: {fileID: 11400000, guid: 74fdb166a5d684a4b8dc3891b629dd2c, type: 2}
+  hurtDuration: 0.4
 --- !u!114 &360656135958470559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,8 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdb198fefe2564741ac9523cc4bdc343, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack
+  playerData: {fileID: 11400000, guid: 74fdb166a5d684a4b8dc3891b629dd2c, type: 2}
   animator: {fileID: 1970010777060723635}
-  comboResetTime: 1
 --- !u!114 &17740159245419407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,14 +178,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1a8defc73a921345a35cf04f03985f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBackDash
+  playerData: {fileID: 11400000, guid: 74fdb166a5d684a4b8dc3891b629dd2c, type: 2}
   animator: {fileID: 1970010777060723635}
   spriteRenderer: {fileID: 4424408904070774721}
   rb: {fileID: 6749940585677992725}
-  doubleTapTime: 2
-  shortDashDistance: 1.5
-  fullDashDistance: 3
-  shortDashDuration: 0.25
-  fullDashDuration: 0.4
 --- !u!114 &8006658492315478217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b632a7dfc3c6dd4a86b3df49a0818f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerKnockback
-  knockbackDuration: 0.2
+  playerData: {fileID: 11400000, guid: 74fdb166a5d684a4b8dc3891b629dd2c, type: 2}
 --- !u!114 &7541376851543460675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,15 +219,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5df28f49955f584c8606cf40abcdbe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackHitbox
+  playerData: {fileID: 11400000, guid: 74fdb166a5d684a4b8dc3891b629dd2c, type: 2}
   hitboxPrefab: {fileID: 8235446756036643883, guid: 52cd617c82c63f54ea0acc0199654ee8, type: 3}
   shootPoint: {fileID: 4801349495844819556}
   spriteRenderer: {fileID: 4424408904070774721}
-  attack1Damage: 1
-  attack2Damage: 1
-  attack3Damage: 2
-  attack1Delay: 0.2
-  attack2Delay: 0.2
-  attack3Delay: 0.25
 --- !u!114 &7759671678147051029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,11 +247,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccebde1b0edc6bb4584a4be723418743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRoll
+  playerData: {fileID: 11400000, guid: 74fdb166a5d684a4b8dc3891b629dd2c, type: 2}
   animator: {fileID: 1970010777060723635}
   rb: {fileID: 6749940585677992725}
   playerCollider: {fileID: 5875272030046105619}
-  rollSpeed: 7
-  rollDuration: 0.5
   rollColliderSize: {x: 0.6, y: 0.8}
   rollColliderOffset: {x: 0, y: -0.3}
 --- !u!114 &-8697018221231035513
@@ -274,7 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46c2473ef206a8a42be7fd3d1cdc6e09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInvulnerability
-  invulnerabilityDuration: 1
+  playerData: {fileID: 11400000, guid: 74fdb166a5d684a4b8dc3891b629dd2c, type: 2}
 --- !u!114 &7576503921561645810
 MonoBehaviour:
   m_ObjectHideFlags: 0

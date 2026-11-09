@@ -16,4 +16,4 @@ MonoBehaviour:
   bonusDamage: 1
   invulnerabilityDuration: 5
   effectDuration: 5
-  dropChance: 0.5
+  dropChance: 1

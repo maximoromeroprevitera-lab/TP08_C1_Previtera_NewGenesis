@@ -391,10 +391,11 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 99893e33d645e3641bf5e9cf3e2ce0ad, type: 2}
   healthBar: {fileID: 253975721785999309}
   deathParticles: {fileID: 2482280297917236139, guid: f6d8367ac90756442a43248e1110d554, type: 3}
-  ammoBoxPrefab: {fileID: 1097126900871704949, guid: 45ec0ec5c8970c74c853bebb6d57159f, type: 3}
   deathAnimationTime: 1
-  dropKey: 1
+  dropKey: 0
   keyPrefab: {fileID: 6801191980584068905, guid: 63b3cb5cccf9e064a915cc4a6b469320, type: 3}
+  pickablePool: {fileID: 0}
+  pickableData: {fileID: 11400000, guid: f4b0c0b63a9c45e48b98550334ade179, type: 2}
 --- !u!114 &253975721785999309
 MonoBehaviour:
   m_ObjectHideFlags: 0

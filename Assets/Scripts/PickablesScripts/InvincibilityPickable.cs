@@ -1,6 +1,11 @@
 using UnityEngine;
 public class InvincibilityPickable : MonoBehaviour
 {
+    private PickablePool pool;
+    private void Awake()
+    {
+        pool = FindFirstObjectByType<PickablePool>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         PlayerPickableEffects effects =
@@ -10,6 +15,6 @@ public class InvincibilityPickable : MonoBehaviour
             return;
 
         if (effects.TryCollectInvincibility())
-            Destroy(gameObject);
+            pool.ReturnPickable(gameObject);
     }
 }

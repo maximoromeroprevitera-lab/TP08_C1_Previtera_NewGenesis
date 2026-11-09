@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: Assembly-CSharp::PlayerData
   moveSpeed: 7
-  jumpForce: 9
+  jumpForce: 10
   maxHealth: 6
   attack1Damage: 1
   attack2Damage: 1

@@ -1,17 +1,19 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 public class EnemyLife : MonoBehaviour
 {
     [Header("Enemy Data")]
     [SerializeField] private EnemyDataSO enemyData;
-    [Header("References")]
     [SerializeField] private EnemyHealthBar healthBar;
+    [Header("Death")]
     [SerializeField] private GameObject deathParticles;
-    [SerializeField] private GameObject ammoBoxPrefab;
     [SerializeField] private float deathAnimationTime = 1f;
     [Header("Key")]
     [SerializeField] private bool dropKey;
     [SerializeField] private GameObject keyPrefab;
+    [Header("Pickables")]
+    private PickablePool pickablePool;
+    [SerializeField] private PickableDataSO pickableData;
     private int currentHealth;
     private EnemyStateMachine stateMachine;
     private EnemyFlash enemyFlash;
@@ -22,6 +24,7 @@ public class EnemyLife : MonoBehaviour
     {
         stateMachine = GetComponent<EnemyStateMachine>();
         enemyFlash = GetComponent<EnemyFlash>();
+        pickablePool = FindFirstObjectByType<PickablePool>();
     }
     private void Start()
     {
@@ -30,7 +33,8 @@ public class EnemyLife : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        if (isDead) return;
+        if (isDead || damage <= 0)
+            return;
 
         currentHealth = Mathf.Max(0, currentHealth - damage);
         healthBar.SetHealth(currentHealth, enemyData.maxHealth);
@@ -53,34 +57,38 @@ public class EnemyLife : MonoBehaviour
 
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayDeathEnemy();
+        BoxCollider2D box = GetComponent<BoxCollider2D>();
+
+        if (box != null)
+        {
+            box.size = new Vector2(0.22f, 0.22f);
+            box.offset = new Vector2(0f, -0.4f);
+        }
+
+        if (box != null)
+        {
+            float oldHeight = box.size.y;
+
+            box.size *= 0.5f;
+            box.offset = new Vector2(
+                box.offset.x,
+                box.offset.y - oldHeight * 0.25f
+            );
+        }
 
         stateMachine.Die();
 
-        EnemyFollow follow = GetComponent<EnemyFollow>();
-        if (follow != null) follow.enabled = false;
+        if (TryGetComponent(out EnemyFollow follow))
+            follow.enabled = false;
 
-        EnemyMeleeAttack attack = GetComponent<EnemyMeleeAttack>();
-        if (attack != null) attack.enabled = false;
+        if (TryGetComponent(out EnemyMeleeAttack attack))
+            attack.enabled = false;
 
-        EnemyMovement movement = GetComponent<EnemyMovement>();
-        if (movement != null) movement.enabled = false;
+        if (TryGetComponent(out EnemyMovement movement))
+            movement.enabled = false;
 
-        Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        if (rb != null) rb.linearVelocity = Vector2.zero;
-
-        CapsuleCollider2D capsule = GetComponent<CapsuleCollider2D>();
-        if (capsule != null)
-        {
-            capsule.size = new Vector2(0.8f, 0.5f);
-            capsule.offset = new Vector2(0f, -0.5f);
-        }
-
-        BoxCollider2D box = GetComponent<BoxCollider2D>();
-        if (box != null)
-        {
-            box.size = new Vector2(0.8f, 0.5f);
-            box.offset = new Vector2(0f, -0.5f);
-        }
+        if (TryGetComponent(out Rigidbody2D rb))
+            rb.linearVelocity = Vector2.zero;
 
         StartCoroutine(DeathSequence());
     }
@@ -94,8 +102,20 @@ public class EnemyLife : MonoBehaviour
         if (dropKey && keyPrefab != null)
             Instantiate(keyPrefab, transform.position, Quaternion.identity);
 
-        yield return new WaitForSeconds(5f);
+        DropPickable();
 
+        yield return new WaitForSeconds(5f);
         Destroy(gameObject);
+    }
+    private void DropPickable()
+    {
+        if (pickablePool == null || pickableData == null)
+            return;
+
+        if (Random.value > pickableData.dropChance)
+            return;
+
+        int randomType = Random.Range(0, 3);
+        pickablePool.GetPickable(randomType, transform.position);
     }
 }

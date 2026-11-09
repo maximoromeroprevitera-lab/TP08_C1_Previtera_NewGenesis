@@ -1,6 +1,11 @@
 using UnityEngine;
 public class DamagePickable : MonoBehaviour
 {
+    private PickablePool pool;
+    private void Awake()
+    {
+        pool = FindFirstObjectByType<PickablePool>();
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         PlayerPickableEffects effects =
@@ -10,6 +15,6 @@ public class DamagePickable : MonoBehaviour
             return;
 
         if (effects.TryCollectDamageBoost())
-            Destroy(gameObject);
+            pool.ReturnPickable(gameObject);
     }
 }

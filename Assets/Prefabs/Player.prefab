@@ -155,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLife
   gameManager: {fileID: 0}
   playerData: {fileID: 11400000, guid: 74fdb166a5d684a4b8dc3891b629dd2c, type: 2}
-  hurtDuration: 0.4
+  hurtDuration: 0.5
 --- !u!114 &360656135958470559
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,8 +310,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPickableEffects
   pickableData: {fileID: 11400000, guid: f4b0c0b63a9c45e48b98550334ade179, type: 2}
-  playerLife: {fileID: 0}
-  playerInvulnerability: {fileID: 0}
+  playerLife: {fileID: 3756294237692126471}
+  playerInvulnerability: {fileID: -8697018221231035513}
+  pickableText: {fileID: 0}
+  messageDuration: 5
 --- !u!50 &6749940585677992725
 Rigidbody2D:
   serializedVersion: 5

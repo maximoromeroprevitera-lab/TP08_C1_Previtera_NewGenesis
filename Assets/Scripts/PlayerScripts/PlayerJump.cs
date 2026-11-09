@@ -2,6 +2,7 @@ using UnityEngine;
 public class PlayerJump : MonoBehaviour
 {
     [SerializeField] private PlayerDataSO playerData;
+    [SerializeField] private LayerMask groundLayer;
     private Rigidbody2D rb;
     private PlayerAttack playerAttack;
     private PlayerBackDash playerBackDash;
@@ -15,9 +16,7 @@ public class PlayerJump : MonoBehaviour
     private void Update()
     {
         if (playerAttack.IsAttacking || playerBackDash.IsDashing)
-        {
             return;
-        }
 
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
@@ -34,9 +33,16 @@ public class PlayerJump : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<Ground>() != null)
+        if (((1 << collision.gameObject.layer) & groundLayer.value) != 0)
         {
             isGrounded = true;
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (((1 << collision.gameObject.layer) & groundLayer.value) != 0)
+        {
+            isGrounded = false;
         }
     }
 }

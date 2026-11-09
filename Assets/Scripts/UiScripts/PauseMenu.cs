@@ -22,6 +22,7 @@ public class Pausemenu : MonoBehaviour
     public void Pause()
     {
         gameManager.HideHealthBar();
+        gameManager.HideScoreUI();
 
         Pausepanel.SetActive(true);
         Settingspanel.SetActive(false);
@@ -36,6 +37,7 @@ public class Pausemenu : MonoBehaviour
         Creditspanel.SetActive(false);
 
         gameManager.ShowHealthBar();
+        gameManager.ShowScoreUI();
 
         Time.timeScale = 1f;
     }

@@ -1,6 +1,7 @@
 using UnityEngine;
 public class PlayerRunSound : MonoBehaviour
 {
+    [SerializeField] private LayerMask groundLayer;
     private Rigidbody2D rb;
     private bool isGrounded;
     private bool wasRunning;
@@ -29,13 +30,20 @@ public class PlayerRunSound : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<Ground>() != null)
+        if (((1 << collision.gameObject.layer) & groundLayer.value) != 0)
             isGrounded = true;
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<Ground>() != null)
+        if (((1 << collision.gameObject.layer) & groundLayer.value) != 0)
+        {
             isGrounded = false;
+
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.StopRun();
+
+            wasRunning = false;
+        }
     }
     private void OnDisable()
     {

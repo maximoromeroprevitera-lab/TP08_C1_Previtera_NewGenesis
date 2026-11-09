@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
 public class GameManager : MonoBehaviour
 {
     public GameObject GameOverPanel;
     [SerializeField] private GameObject healthBar;
+    [SerializeField] private GameObject score;
+    [SerializeField] private TMP_Text currentScoreText;
+    [SerializeField] private TMP_Text highScoreText;
     public float deathDelay = 2f;
     [Header("Score")]
     [SerializeField] private int currentScore;
@@ -14,9 +18,12 @@ public class GameManager : MonoBehaviour
     {
         GameOverPanel.SetActive(false);
         healthBar.SetActive(true);
+        score.SetActive(true);
 
         currentScore = 0;
         highScore = PlayerPrefs.GetInt("HighScore", 0);
+
+        UpdateScoreUI();
 
         Time.timeScale = 1f;
     }
@@ -27,12 +34,29 @@ public class GameManager : MonoBehaviour
         if (currentScore > highScore)
         {
             highScore = currentScore;
+
             PlayerPrefs.SetInt("HighScore", highScore);
             PlayerPrefs.Save();
         }
 
+        UpdateScoreUI();
+
         Debug.Log("Score: " + currentScore);
         Debug.Log("High Score: " + highScore);
+    }
+    private void UpdateScoreUI()
+    {
+        currentScoreText.text = "Score: " + currentScore;
+        highScoreText.text = "High Score: " + highScore;
+    }
+    public void HideScoreUI()
+    {
+        score.SetActive(false);
+    }
+    public void ShowScoreUI()
+    {
+        score.SetActive(true);
+        UpdateScoreUI();
     }
     public void GameOver()
     {
@@ -41,6 +65,7 @@ public class GameManager : MonoBehaviour
             gameEnded = true;
 
             HideHealthBar();
+            HideScoreUI();
 
             AudioManager.Instance.PlayGameOver();
 

@@ -1,15 +1,15 @@
 using UnityEngine;
 public class HealthPickable : MonoBehaviour
 {
-    [SerializeField] private int healAmount = 1;
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerLife player = collision.GetComponent<PlayerLife>();
+        PlayerPickableEffects effects =
+            collision.GetComponentInParent<PlayerPickableEffects>();
 
-        if (player != null)
-        {
-            player.Heal(healAmount);
+        if (effects == null)
+            return;
+
+        if (effects.TryCollectHeal())
             Destroy(gameObject);
-        }
     }
 }

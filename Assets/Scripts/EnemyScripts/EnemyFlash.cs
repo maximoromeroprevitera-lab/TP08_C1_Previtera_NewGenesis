@@ -2,8 +2,9 @@ using System.Collections;
 using UnityEngine;
 public class EnemyFlash : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private EnemyDataSO enemyData;
     [Header("Flash Settings")]
-    [SerializeField] private float flashDuration = 0.1f;
     [SerializeField] private Color flashColor = Color.white;
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
@@ -29,7 +30,7 @@ public class EnemyFlash : MonoBehaviour
     {
         spriteRenderer.color = flashColor;
 
-        yield return new WaitForSeconds(flashDuration);
+        yield return new WaitForSeconds(enemyData.flashDuration);
 
         spriteRenderer.color = originalColor;
         flashCoroutine = null;

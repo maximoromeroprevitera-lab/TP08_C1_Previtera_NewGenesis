@@ -3,20 +3,17 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 public class SubfloorEncounter : MonoBehaviour
 {
+    [Header("References")]
+    [SerializeField] private LevelDataSO levelData;
     [Header("Enemy Settings")]
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private Transform[] spawnPoints;
-    [SerializeField] private int minimumEnemies = 4;
-    [SerializeField] private int maximumEnemies = 5;
-    [Header("Timing")]
-    [SerializeField] private float spawnDelay = 3f;
     [Header("Doors")]
     [SerializeField] private TileDoor[] doorsToOpen;
     [Header("Final Door")]
     [SerializeField] private GameObject finalDoorPrefab;
     [SerializeField] private Tilemap groundTilemap;
-    [SerializeField]
-    private Vector3Int finalDoorCell = new Vector3Int(-19, -34, 0);
+    [SerializeField] private Vector3Int finalDoorCell = new Vector3Int(-19, -34, 0);
     private int remainingEnemies;
     private bool encounterStarted;
     private bool encounterCompleted;
@@ -30,11 +27,11 @@ public class SubfloorEncounter : MonoBehaviour
     }
     private IEnumerator SpawnEnemies()
     {
-        yield return new WaitForSeconds(spawnDelay);
+        yield return new WaitForSeconds(levelData.spawnDelay);
 
         int enemyCount = Random.Range(
-            minimumEnemies,
-            maximumEnemies + 1
+            levelData.minimumEnemies,
+            levelData.maximumEnemies + 1
         );
 
         remainingEnemies = enemyCount;
@@ -64,6 +61,7 @@ public class SubfloorEncounter : MonoBehaviour
                 remainingEnemies--;
             }
         }
+
         CheckEnemiesRemaining();
     }
     private void EnemyDefeated()
@@ -94,7 +92,6 @@ public class SubfloorEncounter : MonoBehaviour
                 doorPosition,
                 Quaternion.identity
             );
-            Debug.Log("Final door appeared!");
         }
     }
 }

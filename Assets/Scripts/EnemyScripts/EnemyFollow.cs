@@ -1,10 +1,8 @@
 using UnityEngine;
 public class EnemyFollow : MonoBehaviour
 {
-    [Header("Movement")]
-    [SerializeField] private float speed = 2f;
-    [SerializeField] private float detectionDistance = 10f;
-    [SerializeField] private float stopDistance = 1.5f;
+    [Header("References")]
+    [SerializeField] private EnemyDataSO enemyData;
     [Header("Facing")]
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Transform shootPoint;
@@ -13,7 +11,7 @@ public class EnemyFollow : MonoBehaviour
     private EnemyStateMachine stateMachine;
     private EnemyLife enemyLife;
     private Vector3 originalShootPointPosition;
-    public bool PlayerSeen => player != null && Mathf.Abs(player.position.x - transform.position.x) <= detectionDistance;
+    public bool PlayerSeen => player != null && Mathf.Abs(player.position.x - transform.position.x) <= enemyData.detectionDistance;
     public bool PlayerInShootRange { get; private set; }
     public Transform Player => player;
     private void Awake()
@@ -39,6 +37,7 @@ public class EnemyFollow : MonoBehaviour
     {
         if (enemyLife != null && enemyLife.IsDead)
             return;
+
         if (stateMachine.IsAttacking)
         {
             Stop();
@@ -52,11 +51,12 @@ public class EnemyFollow : MonoBehaviour
             stateMachine.SetMovement(false);
             return;
         }
+
         UpdateFacing();
 
         float distance = Mathf.Abs(player.position.x - transform.position.x);
 
-        PlayerInShootRange = distance <= stopDistance;
+        PlayerInShootRange = distance <= enemyData.stopDistance;
 
         if (PlayerInShootRange)
         {
@@ -89,7 +89,11 @@ public class EnemyFollow : MonoBehaviour
     private void Chase()
     {
         float direction = Mathf.Sign(player.position.x - transform.position.x);
-        rb.linearVelocity = new Vector2(direction * speed, rb.linearVelocity.y);
+
+        rb.linearVelocity = new Vector2(
+            direction * enemyData.moveSpeed,
+            rb.linearVelocity.y
+        );
     }
     private void Stop()
     {

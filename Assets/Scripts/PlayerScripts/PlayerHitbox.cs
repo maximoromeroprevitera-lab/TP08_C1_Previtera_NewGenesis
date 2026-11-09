@@ -5,6 +5,7 @@ public class PlayerHitbox : MonoBehaviour
     private int damage;
     private bool hasHit;
     private bool isInitialized;
+    private PlayerPickableEffects pickableEffects;
     public void Setup(int attackDamage)
     {
         damage = attackDamage;
@@ -18,28 +19,32 @@ public class PlayerHitbox : MonoBehaviour
             return;
         }
 
+        pickableEffects = FindFirstObjectByType<PlayerPickableEffects>();
+
         Destroy(gameObject, lifetime);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!isInitialized || hasHit)
-        {
             return;
-        }
 
         EnemyLife enemyLife =
             collision.GetComponentInParent<EnemyLife>();
 
         if (enemyLife == null || enemyLife.IsDead)
-        {
             return;
-        }
 
         hasHit = true;
 
+        int finalDamage = damage;
+
+        if (pickableEffects != null)
+            finalDamage += pickableEffects.BonusDamage;
+
         if (AudioManager.Instance != null)
             AudioManager.Instance.PlayHit();
-        enemyLife.TakeDamage(damage);
+
+        enemyLife.TakeDamage(finalDamage);
 
         Destroy(gameObject);
     }

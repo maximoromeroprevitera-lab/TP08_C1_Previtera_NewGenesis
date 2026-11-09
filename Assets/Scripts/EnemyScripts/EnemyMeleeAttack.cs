@@ -3,20 +3,10 @@ using UnityEngine;
 public class EnemyMeleeAttack : MonoBehaviour
 {
     [Header("References")]
+    [SerializeField] private EnemyDataSO enemyData;
     [SerializeField] private GameObject hitboxPrefab;
     [SerializeField] private Transform shootPoint;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [Header("Attack")]
-    [SerializeField] private int damage = 1;
-    [SerializeField] private float attackCooldown = 1.5f;
-    [Header("Attack Timing")]
-    [SerializeField] private float firstHitDelay = 0.25f;
-    [SerializeField] private float firstAttackDuration = 0.65f;
-    [SerializeField] private float secondHitDelay = 0.25f;
-    [SerializeField] private float secondAttackDuration = 0.65f;
-    [Header("Knockback")]
-    [SerializeField] private float knockbackForce = 8f;
-    [SerializeField] private float knockbackUpForce = 2f;
     private EnemyStateMachine stateMachine;
     private EnemyLife enemyLife;
     private EnemyFollow enemyFollow;
@@ -35,7 +25,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     private void Start()
     {
         playerLife = FindFirstObjectByType<PlayerLife>();
-        cooldownTimer = attackCooldown;
+        cooldownTimer = enemyData.attackCooldown;
     }
     private void Update()
     {
@@ -48,7 +38,7 @@ public class EnemyMeleeAttack : MonoBehaviour
         if (cooldownTimer <= 0f && enemyFollow.PlayerSeen)
         {
             StartCoroutine(AttackCombo());
-            cooldownTimer = attackCooldown;
+            cooldownTimer = enemyData.attackCooldown;
         }
     }
     private IEnumerator AttackCombo()
@@ -56,19 +46,23 @@ public class EnemyMeleeAttack : MonoBehaviour
         isAttacking = true;
         stateMachine.PlayAttack1();
 
-        yield return new WaitForSeconds(firstHitDelay);
+        yield return new WaitForSeconds(enemyData.firstHitDelay);
         SpawnHitbox();
 
-        yield return new WaitForSeconds(firstAttackDuration - firstHitDelay);
+        yield return new WaitForSeconds(
+            enemyData.firstAttackDuration - enemyData.firstHitDelay
+        );
 
         if (enemyLife.IsDead) yield break;
 
         stateMachine.PlayAttack2();
 
-        yield return new WaitForSeconds(secondHitDelay);
+        yield return new WaitForSeconds(enemyData.secondHitDelay);
         SpawnHitbox();
 
-        yield return new WaitForSeconds(secondAttackDuration - secondHitDelay);
+        yield return new WaitForSeconds(
+            enemyData.secondAttackDuration - enemyData.secondHitDelay
+        );
 
         if (!enemyLife.IsDead)
             stateMachine.FinishAttack();
@@ -90,16 +84,23 @@ public class EnemyMeleeAttack : MonoBehaviour
 
         if (box != null && spriteRenderer != null)
         {
-            Vector2 offset = box.offset;
-            offset.x = spriteRenderer.flipX
+            Vector2 offset = box.offset; offset.x = spriteRenderer.flipX
                 ? -Mathf.Abs(offset.x)
                 : Mathf.Abs(offset.x);
 
             box.offset = offset;
         }
+
         EnemyHitbox hitboxScript = hitbox.GetComponent<EnemyHitbox>();
 
         if (hitboxScript != null)
-            hitboxScript.Setup(transform, damage, knockbackForce, knockbackUpForce);
+        {
+            hitboxScript.Setup(
+                transform,
+                enemyData.attackDamage,
+                enemyData.knockbackForce,
+                enemyData.knockbackUpForce
+            );
+        }
     }
 }

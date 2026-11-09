@@ -361,9 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df9edc53646c6449bb2ce8a7a359d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFollow
-  speed: 2
-  detectionDistance: 7
-  stopDistance: 2.2
+  enemyData: {fileID: 11400000, guid: 99893e33d645e3641bf5e9cf3e2ce0ad, type: 2}
   spriteRenderer: {fileID: 2937602245214674324}
   shootPoint: {fileID: 5333180131218336019}
 --- !u!114 &1315095137413959530
@@ -394,7 +392,6 @@ MonoBehaviour:
   healthBar: {fileID: 253975721785999309}
   deathParticles: {fileID: 2482280297917236139, guid: f6d8367ac90756442a43248e1110d554, type: 3}
   ammoBoxPrefab: {fileID: 1097126900871704949, guid: 45ec0ec5c8970c74c853bebb6d57159f, type: 3}
-  dropOffsetY: -0.6
   deathAnimationTime: 1
   dropKey: 1
   keyPrefab: {fileID: 6801191980584068905, guid: 63b3cb5cccf9e064a915cc4a6b469320, type: 3}
@@ -436,17 +433,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d062bc4651da63e42b22801be3f99484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMeleeAttack
+  enemyData: {fileID: 11400000, guid: 99893e33d645e3641bf5e9cf3e2ce0ad, type: 2}
   hitboxPrefab: {fileID: 1403696518750541974, guid: ebf6ad02d1b05194a8605eb03e3452dd, type: 3}
   shootPoint: {fileID: 5333180131218336019}
   spriteRenderer: {fileID: 2937602245214674324}
-  damage: 1
-  attackCooldown: 2
-  firstHitDelay: 0.55
-  firstAttackDuration: 1.1
-  secondHitDelay: 0.55
-  secondAttackDuration: 1.1
-  knockbackForce: 7
-  knockbackUpForce: 0
 --- !u!114 &443912264781178526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,7 +449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa503872ea33d5478fd035ba37f84f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFlash
-  flashDuration: 0.1
+  enemyData: {fileID: 11400000, guid: 99893e33d645e3641bf5e9cf3e2ce0ad, type: 2}
   flashColor: {r: 0.5019608, g: 0.1882353, b: 0.1882353, a: 1}
 --- !u!50 &1889059019824831897
 Rigidbody2D:

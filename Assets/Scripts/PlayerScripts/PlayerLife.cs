@@ -6,6 +6,7 @@ public class PlayerLife : MonoBehaviour
     [SerializeField] private PlayerDataSO playerData;
     [SerializeField] private float hurtDuration = 0.4f;
     private int currentHealth;
+    private PlayerInvulnerability playerInvulnerability;
     private PlayerStateMachine stateMachine;
     private bool isDead;
     public bool IsDead => isDead;
@@ -15,6 +16,7 @@ public class PlayerLife : MonoBehaviour
     private void Awake()
     {
         stateMachine = GetComponent<PlayerStateMachine>();
+        playerInvulnerability = GetComponent<PlayerInvulnerability>();
     }
     private void Start()
     {
@@ -31,7 +33,9 @@ public class PlayerLife : MonoBehaviour
     {
         if (isDead || damage <= 0)
             return;
-
+        if (playerInvulnerability != null &&
+        playerInvulnerability.IsInvulnerable)
+            return;
         currentHealth -= damage;
 
         if (currentHealth <= 0)

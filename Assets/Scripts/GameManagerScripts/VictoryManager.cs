@@ -14,6 +14,7 @@ public class VictoryManager : MonoBehaviour
     public void Win()
     {
         gameManager.HideHealthBar();
+        gameManager.ShowScoreUI();
 
         victoryPanel.SetActive(true);
         Time.timeScale = 0f;
